@@ -1,0 +1,7 @@
+# Site settings
+title: 学佛
+baseurl: "" # the subpath of your site, e.g. /blog/
+
+# Build settings
+markdown: kramdown
+cdn_url: "http://miaoyin.qiniudn.com"
