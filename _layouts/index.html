@@ -1,0 +1,60 @@
+--- 
+layout:  header
+--- 
+
+<div class="container">
+  <div class="row">
+    <!-- Blog Entries Column -->
+    <div class="col-md-9">
+      {{ content }}
+    </div>
+    <!-- Blog Sidebar Widgets Column -->
+    <div class="col-md-3" id="aside">
+      <!-- Blog Categories Well -->
+      <!--
+      <div class="well">
+        <h4>分 类</h4>
+        <div class="row list-group">
+            {% for cat in site.categories%}
+            <a href="/categories.html#{{cat | first}}" class="list-group-item">{{cat | first}} <span class="badge">{{cat|last|size}}</span></a>
+            {% endfor %}
+        </div>
+      </div>
+      -->
+      <div class="well">
+      {% include category_cloud.html %}
+      </div>
+
+      <!-- Blog Links Well -->
+      <div class="well">
+        <h4>链接</h4>
+        <div class="row list-group">
+
+          <a class="list-group-item" rel="nofollow" target="_blank" href="http://www.liaotuo.org/list-472.html">净空法师专集</a>
+
+          <a class="list-group-item" rel="nofollow" target="_blank" href="http://www.sxjyqqw.org/">圣贤教育全球网</a>
+
+          <a class="list-group-item" rel="nofollow" target="_blank" href="http://www.honghuashe.com/">弘化社</a>
+          
+          <a class="list-group-item" rel="nofollow" target="_blank" href="http://www.fodizi.com/fofa/1_1.htm">净空法师</a>
+          
+          <a class="list-group-item" rel="nofollow" target="_blank" href="http://www.liaotuo.org/">弘善佛教</a>
+                                                    
+          <a class="list-group-item" rel="nofollow" target="_blank" href="http://new.amtb-aus.org/">净宗学院</a>
+                                                    
+          <a class="list-group-item" rel="nofollow" target="_blank" href="http://www.amtcn.net/">莲花生命关怀</a>
+          
+          <a class="list-group-item" rel="nofollow" target="_blank" href="http://www.fodizi.com/">佛弟子</a>
+                                                    
+          <a class="list-group-item" rel="nofollow" target="_blank" href="http://www.v2ex.com/">v2ex</a>
+                                                    
+          <a class="list-group-item" rel="nofollow" target="_blank" href="http://www.ruanyifeng.com/blog">阮一峰的网络日志</a>
+          
+          <a class="list-group-item" rel="nofollow" target="_blank" href="http://coolshell.cn/">酷壳</a>
+                                                    
+          <a class="list-group-item" rel="nofollow" target="_blank" href="http://yongqing.is-programmer.com/">快乐程序员</a>
+          <a class="list-group-item" target="_blank" href="http://beyondzl.com/">漫步云端</a>
+      </div>
+    </div>
+  </div>
+

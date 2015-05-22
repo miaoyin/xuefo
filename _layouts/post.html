@@ -1,15 +1,47 @@
----
-layout: default
----
-<div class="post">
+--- 
+layout:  header
+--- 
+<!-- Blog Post -->
+<!-- Title -->
+<h2>
+  {{ page.title }}
+  <div class="post-date">
+        妙音 posted @
+        <span class="glyphicon glyphicon-time"></span>
+        {{ page.date | date: "%Y-%m-%d %H:%M" }}
+        in {{page.categories}} with tags {{page.tags}}
+  </div>
+</h2>
+<!-- Author -->
+<hr>
 
-  <header class="post-header">
-    <h1 class="post-title">{{ page.title }}</h1>
-    <p class="post-meta">{{ page.date | date: "%b %-d, %Y" }}{% if page.author %} • {{ page.author }}{% endif %}{% if page.meta %} • {{ page.meta }}{% endif %}</p>
-  </header>
-
-  <article class="post-content">
+<div class="col-md-10">
     {{ content }}
-  </article>
-
+    <br/>
+    <div style="margin-top:10px;margin-bottom:10px">
+      {%if page.previous%}
+      <span class="next">
+        上篇：
+        <a href="{{page.previous.url}}">
+          {{page.previous.title}}
+        </a>
+      </span>
+      {%endif%} 
+      {%if page.next%}
+      <span class="prev">
+        下篇：
+        <a href="{{page.next.url}}">
+          {{page.next.title}}
+        </a>
+      </span>
+      {%endif%}
+    </div>
+    <hr>
+    <!-- Blog Comments -->
+    <div class="media">
+        <!-- UY BEGIN -->
+        <div id="uyan_frame"></div>
+        <script type="text/javascript" src="http://v2.uyan.cc/code/uyan.js?uid=1965284"></script>
+        <!-- UY END -->
+    </div>
 </div>
