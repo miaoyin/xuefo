@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+  
+  <head>
+    <meta charset="utf-8">
+    <meta name="baidu-site-verification" content="fk7KxxZA62" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>
+      理解指令的restrict属性
+    </title>
+    <!--
+    <link rel="shortcut icon" type="image/x-icon" href="/static/images/favicon.ico" media="screen" />
+     -->
+    <!-- Bootstrap Core CSS -->
+    <link href="/static/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/static/bootstrap/css/bootstrap-theme.min.css" rel="stylesheet">
+    <link href="/static/css/blog.css" rel="stylesheet">
+    <link href="/static/css/pygments.css" rel="stylesheet">
+    <script src="/static/js/jquery-1.11.0.js"></script>
+    <script src="/static/bootstrap/js/bootstrap.min.js"></script>
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media
+    queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file://
+    -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js">
+      </script>
+      <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js">
+      </script>
+    <![endif]-->
+    <script>
+        var _hmt = _hmt || [];
+        (function() {
+          var hm = document.createElement("script");
+          hm.src = "//hm.baidu.com/hm.js?4a7b2b2a1ee8b8686ec632c195bbd833";
+          var s = document.getElementsByTagName("script")[0]; 
+          s.parentNode.insertBefore(hm, s);
+        })();
+    </script>
+  </head>
+  
+  <body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-inverse navbar-fixed-top " role="navigation">
+      <div class="container">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+          <a class="navbar-brand " href="/" >妙音</a>
+        </div>
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse">
+            <ul class="nav navbar-nav">
+                <li><a href="/categories.html">分 类</a></li>
+                <li><a href="/fofa.html">学佛</a></li>
+                <li><a href="/tools.html">工具</a></li>
+            </ul>
+            <form class="navbar-form navbar-right" role="search" action="https://www.google.com/search" method="get">
+              <div class="input-group">
+                <input type="text" name="q" class="form-control search-query" placeholder="搜索">
+                <input type="hidden" name="ie" value="UTF-8" />
+                <input type="hidden" name="sitesearch" value="www.zhulinjingshe.cn" />
+              </div>
+            </form>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Page Content -->
+    <div class="container">
+      <div class="content">
+          <div class="row">
+            <!-- Blog Post -->
+<!-- Title -->
+<h2>
+  理解指令的restrict属性
+  <div class="post-date">
+        妙音 posted @
+        <span class="glyphicon glyphicon-time"></span>
+        2014-07-30 01:26
+        in angularjs with tags 
+  </div>
+</h2>
+<!-- Author -->
+<hr>
+
+<div class="col-md-10">
+    <h2>restrcit属性说明</h2>
+
+<p>restrict: EACM中的任意一个之母。它是用来限制指令的声明格式的。</p>
+
+<div class="highlight"><pre><code class="language-bash" data-lang="bash">E - 元素名称：&lt;my-directive&gt;&lt;/my-directive&gt;
+A - 属性： &lt;div my-directive<span class="o">=</span><span class="s2">&quot;exp&quot;</span>&gt; &lt;/div&gt;
+C - 类名：&lt;div <span class="nv">class</span><span class="o">=</span><span class="s2">&quot;my-directive: exp;&quot;</span>&gt;&lt;/div&gt;
+M - 注释： &lt;!-- directive: my-directive exp --&gt;</code></pre></div>
+
+<h2>它做了什么</h2>
+
+<ul>
+<li>示例</li>
+</ul>
+
+<div class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;html</span> <span class="na">ng-app=</span><span class="s">&#39;app&#39;</span><span class="nt">&gt;</span>
+<span class="nt">&lt;body&gt;</span>
+    <span class="nt">&lt;hello&gt;</span> <span class="nt">&lt;/hello&gt;</span>
+    <span class="nt">&lt;div</span> <span class="na">hello</span><span class="nt">&gt;</span> <span class="nt">&lt;/div&gt;</span>
+    <span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">&quot;hello&quot;</span><span class="nt">&gt;</span> <span class="nt">&lt;/div&gt;</span>
+    <span class="c">&lt;!-- directive: hello --&gt;</span>
+<span class="nt">&lt;/body&gt;</span>
+ 
+<span class="nt">&lt;script </span><span class="na">src=</span><span class="s">&quot;bower_components/angular/angular.js&quot;</span><span class="nt">&gt;&lt;/script&gt;</span>
+<span class="nt">&lt;script&gt;</span>
+<span class="kd">var</span> <span class="nx">appModule</span> <span class="o">=</span> <span class="nx">angular</span><span class="p">.</span><span class="nx">module</span><span class="p">(</span><span class="s1">&#39;app&#39;</span><span class="p">,</span> <span class="p">[]);</span>
+<span class="nx">appModule</span><span class="p">.</span><span class="nx">directive</span><span class="p">(</span><span class="s1">&#39;hello&#39;</span><span class="p">,</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="p">{</span>
+        <span class="nx">restrict</span><span class="o">:</span> <span class="s1">&#39;AEC&#39;</span><span class="p">,</span>
+        <span class="nx">template</span><span class="o">:</span> <span class="s1">&#39;&lt;h3&gt;Hi there&lt;/h3&gt;&#39;</span><span class="p">,</span>
+        <span class="nx">replace</span><span class="o">:</span> <span class="kc">true</span>
+    <span class="p">};</span>
+<span class="p">});</span>
+<span class="nt">&lt;/script&gt;</span>
+<span class="nt">&lt;/html&gt;</span></code></pre></div>
+
+<ul>
+<li>运行结果</li>
+</ul>
+
+<div class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;h3&gt;</span>Hi there<span class="nt">&lt;/h3&gt;</span>
+<span class="nt">&lt;h3</span> <span class="na">hello</span><span class="nt">&gt;</span>Hi there<span class="nt">&lt;/h3&gt;</span>
+<span class="nt">&lt;h3</span> <span class="na">class=</span><span class="s">&quot;hello&quot;</span><span class="nt">&gt;</span>Hi there<span class="nt">&lt;/h3&gt;</span>
+<span class="nt">&lt;h3&gt;</span>Hi there<span class="nt">&lt;/h3&gt;</span></code></pre></div>
+
+<p>可以看到几种方式，做的事情一样，只有部分区别. 这些区别有什么作用，用在什么场合？</p>
+
+<h2>使用场合</h2>
+
+<ul>
+<li>restrict=E时，浏览器无法识别指令的声明元素，那么可以知道这个指令一定是起 <strong>替换作用</strong> ，也就是说template一定有值.<br></li>
+<li>restrict=A时，指令是以元素属性形式存在的，这个指令的作用则可以不是替换作用. 那么它可以做什么？ <strong>以link方式操作dom</strong><br>
+比如为元素聚焦</li>
+</ul>
+
+<div class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">&quot;input&quot;</span> <span class="na">focus</span><span class="nt">/&gt;</span>
+ 
+appModule.directive(&#39;focus&#39;, function() {
+    return {
+        restrict: &#39;A&#39;,
+        link:function(scope, elem, attrs){
+            $(elem).focus();
+        }
+    };
+});</code></pre></div>
+
+<ul>
+<li>restrict=C，则是在绑定指令的同时，指定它的css样式，让指令与样式同步.<br></li>
+<li>restrict=M，则在一些场合非常有用，方便在注释与代码之间切换.<br></li>
+</ul>
+
+    <br/>
+    <div style="margin-top:10px;margin-bottom:10px">
+      
+      <span class="next">
+        上篇：
+        <a href="/webpy/2014/07/15/webpy.html">
+          webpy在insert时psycopg2.OperationalError: ...currval 仍没被定义
+        </a>
+      </span>
+       
+      
+      <span class="prev">
+        下篇：
+        <a href="/python/2014/07/30/python.html">
+          mkstemp、mktemp、TemporaryFile区别
+        </a>
+      </span>
+      
+    </div>
+    <hr>
+    <!-- Blog Comments -->
+    <div class="media">
+        <!-- UY BEGIN -->
+        <div id="uyan_frame"></div>
+        <script type="text/javascript" src="http://v2.uyan.cc/code/uyan.js?uid=1965284"></script>
+        <!-- UY END -->
+    </div>
+</div>
+
+          </div>
+      </div>
+      <!-- Footer -->
+      <footer>
+        <div class="row">
+          <div class="col-lg-12">
+            <p align="center"></p>
+          </div>
+        </div>
+      </footer>
+    </div>
+    <script src="/static/js/blog.js"></script>
+  </body>
+</html>
+

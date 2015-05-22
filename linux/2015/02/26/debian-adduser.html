@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+  
+  <head>
+    <meta charset="utf-8">
+    <meta name="baidu-site-verification" content="fk7KxxZA62" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>
+      debian创建用户没有宿主目录
+    </title>
+    <!--
+    <link rel="shortcut icon" type="image/x-icon" href="/static/images/favicon.ico" media="screen" />
+     -->
+    <!-- Bootstrap Core CSS -->
+    <link href="/static/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/static/bootstrap/css/bootstrap-theme.min.css" rel="stylesheet">
+    <link href="/static/css/blog.css" rel="stylesheet">
+    <link href="/static/css/pygments.css" rel="stylesheet">
+    <script src="/static/js/jquery-1.11.0.js"></script>
+    <script src="/static/bootstrap/js/bootstrap.min.js"></script>
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media
+    queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file://
+    -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js">
+      </script>
+      <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js">
+      </script>
+    <![endif]-->
+    <script>
+        var _hmt = _hmt || [];
+        (function() {
+          var hm = document.createElement("script");
+          hm.src = "//hm.baidu.com/hm.js?4a7b2b2a1ee8b8686ec632c195bbd833";
+          var s = document.getElementsByTagName("script")[0]; 
+          s.parentNode.insertBefore(hm, s);
+        })();
+    </script>
+  </head>
+  
+  <body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-inverse navbar-fixed-top " role="navigation">
+      <div class="container">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+          <a class="navbar-brand " href="/" >妙音</a>
+        </div>
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse">
+            <ul class="nav navbar-nav">
+                <li><a href="/categories.html">分 类</a></li>
+                <li><a href="/fofa.html">学佛</a></li>
+                <li><a href="/tools.html">工具</a></li>
+            </ul>
+            <form class="navbar-form navbar-right" role="search" action="https://www.google.com/search" method="get">
+              <div class="input-group">
+                <input type="text" name="q" class="form-control search-query" placeholder="搜索">
+                <input type="hidden" name="ie" value="UTF-8" />
+                <input type="hidden" name="sitesearch" value="www.zhulinjingshe.cn" />
+              </div>
+            </form>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Page Content -->
+    <div class="container">
+      <div class="content">
+          <div class="row">
+            <!-- Blog Post -->
+<!-- Title -->
+<h2>
+  debian创建用户没有宿主目录
+  <div class="post-date">
+        妙音 posted @
+        <span class="glyphicon glyphicon-time"></span>
+        2015-02-26 15:19
+        in linux with tags debian
+  </div>
+</h2>
+<!-- Author -->
+<hr>
+
+<div class="col-md-10">
+    <p>在debian系统中，以useradd创建用户，默认不会创建密码和宿主目录. debian建议用adduser创建用户，它会提示创建初始密码和目录.</p>
+
+<div class="highlight"><pre><code class="language-bash" data-lang="bash">root@xxxx:/home# adduser wyq
+perl: warning: Setting locale failed.
+perl: warning: Please check that your locale settings:
+    <span class="nv">LANGUAGE</span> <span class="o">=</span> <span class="o">(</span><span class="nb">unset</span><span class="o">)</span>,
+    <span class="nv">LC_ALL</span> <span class="o">=</span> <span class="o">(</span><span class="nb">unset</span><span class="o">)</span>,
+    <span class="nv">LC_CTYPE</span> <span class="o">=</span> <span class="s2">&quot;zh_CN.UTF-8&quot;</span>,
+    <span class="nv">LANG</span> <span class="o">=</span> <span class="s2">&quot;en_US.UTF-8&quot;</span>
+    are supported and installed on your system.
+perl: warning: Falling back to the standard locale <span class="o">(</span><span class="s2">&quot;C&quot;</span><span class="o">)</span>.
+Adding user <span class="sb">`</span>pkadmin<span class="s1">&#39; ...</span>
+<span class="s1">Adding new group `wyq&#39;</span> <span class="o">(</span>1003<span class="o">)</span> ...
+Adding new user <span class="sb">`</span>wyq<span class="s1">&#39; (1002) with group `wyq&#39;</span> ...
+Creating home directory <span class="sb">`</span>/home/wyq<span class="s1">&#39; ...</span>
+<span class="s1">Copying files from `/etc/skel&#39;</span> ...
+Enter new UNIX password: 
+Retype new UNIX password: 
+passwd: password updated successfully
+Changing the user information <span class="k">for</span> wyq
+Enter the new value, or press ENTER <span class="k">for</span> the default
+    Full Name <span class="o">[]</span>:       
+    Room Number <span class="o">[]</span>: 
+    Work Phone <span class="o">[]</span>: 
+    Home Phone <span class="o">[]</span>: 
+    Other <span class="o">[]</span>: 
+Is the information correct? <span class="o">[</span>Y/n<span class="o">]</span> y</code></pre></div>
+
+    <br/>
+    <div style="margin-top:10px;margin-bottom:10px">
+      
+      <span class="next">
+        上篇：
+        <a href="/linux/2015/02/24/linux-chkconfig-02.html">
+          chkconfig简介
+        </a>
+      </span>
+       
+      
+      <span class="prev">
+        下篇：
+        <a href="/%E9%98%BF%E9%87%8C%E4%BA%91/2015/02/26/ali.html">
+          内外网同时访问阿里rds数据库
+        </a>
+      </span>
+      
+    </div>
+    <hr>
+    <!-- Blog Comments -->
+    <div class="media">
+        <!-- UY BEGIN -->
+        <div id="uyan_frame"></div>
+        <script type="text/javascript" src="http://v2.uyan.cc/code/uyan.js?uid=1965284"></script>
+        <!-- UY END -->
+    </div>
+</div>
+
+          </div>
+      </div>
+      <!-- Footer -->
+      <footer>
+        <div class="row">
+          <div class="col-lg-12">
+            <p align="center"></p>
+          </div>
+        </div>
+      </footer>
+    </div>
+    <script src="/static/js/blog.js"></script>
+  </body>
+</html>
+

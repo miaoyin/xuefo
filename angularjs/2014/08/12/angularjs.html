@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="en">
+  
+  <head>
+    <meta charset="utf-8">
+    <meta name="baidu-site-verification" content="fk7KxxZA62" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>
+      angularjs指令名是怎么回事？
+    </title>
+    <!--
+    <link rel="shortcut icon" type="image/x-icon" href="/static/images/favicon.ico" media="screen" />
+     -->
+    <!-- Bootstrap Core CSS -->
+    <link href="/static/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/static/bootstrap/css/bootstrap-theme.min.css" rel="stylesheet">
+    <link href="/static/css/blog.css" rel="stylesheet">
+    <link href="/static/css/pygments.css" rel="stylesheet">
+    <script src="/static/js/jquery-1.11.0.js"></script>
+    <script src="/static/bootstrap/js/bootstrap.min.js"></script>
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media
+    queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file://
+    -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js">
+      </script>
+      <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js">
+      </script>
+    <![endif]-->
+    <script>
+        var _hmt = _hmt || [];
+        (function() {
+          var hm = document.createElement("script");
+          hm.src = "//hm.baidu.com/hm.js?4a7b2b2a1ee8b8686ec632c195bbd833";
+          var s = document.getElementsByTagName("script")[0]; 
+          s.parentNode.insertBefore(hm, s);
+        })();
+    </script>
+  </head>
+  
+  <body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-inverse navbar-fixed-top " role="navigation">
+      <div class="container">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+          <a class="navbar-brand " href="/" >妙音</a>
+        </div>
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse">
+            <ul class="nav navbar-nav">
+                <li><a href="/categories.html">分 类</a></li>
+                <li><a href="/fofa.html">学佛</a></li>
+                <li><a href="/tools.html">工具</a></li>
+            </ul>
+            <form class="navbar-form navbar-right" role="search" action="https://www.google.com/search" method="get">
+              <div class="input-group">
+                <input type="text" name="q" class="form-control search-query" placeholder="搜索">
+                <input type="hidden" name="ie" value="UTF-8" />
+                <input type="hidden" name="sitesearch" value="www.zhulinjingshe.cn" />
+              </div>
+            </form>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Page Content -->
+    <div class="container">
+      <div class="content">
+          <div class="row">
+            <!-- Blog Post -->
+<!-- Title -->
+<h2>
+  angularjs指令名是怎么回事？
+  <div class="post-date">
+        妙音 posted @
+        <span class="glyphicon glyphicon-time"></span>
+        2014-08-12 12:06
+        in angularjs with tags 
+  </div>
+</h2>
+<!-- Author -->
+<hr>
+
+<div class="col-md-10">
+    <h2>疑惑</h2>
+
+<p>查了很多资料，对指令名的介绍都是一笔带过，只说是驼峰形式. 但是在实际使用时，经常遇到定义的指令名与指令标签对应不上的情况. 对指令名就感到非常疑惑. 定义时指令名是一种形式，使用时又是一种形式，两者怎么关联对应的？  </p>
+
+<p>找不到资料，自己查查angular源码，一探究竟.  </p>
+
+<h2>分析源码</h2>
+
+<p>首先在angular.js文件，找到解析指令名的代码</p>
+
+<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="k">switch</span><span class="p">(</span><span class="nx">nodeType</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">case</span> <span class="mi">1</span><span class="o">:</span> <span class="cm">/* Element */</span>
+    <span class="c1">// use the node name: &lt;directive&gt;</span>
+    <span class="c1">//此处是解析标签形式的指令</span>
+    <span class="nx">addDirective</span><span class="p">(</span><span class="nx">directives</span><span class="p">,</span>
+        <span class="nx">directiveNormalize</span><span class="p">(</span><span class="nx">nodeName_</span><span class="p">(</span><span class="nx">node</span><span class="p">).</span><span class="nx">toLowerCase</span><span class="p">()),</span> <span class="s1">&#39;E&#39;</span><span class="p">,</span> <span class="nx">maxPriority</span><span class="p">,</span> <span class="nx">ignoreDirective</span><span class="p">);</span>
+ 
+    <span class="c1">// iterate over the attributes</span>
+    <span class="k">for</span> <span class="p">(</span><span class="kd">var</span> <span class="nx">attr</span><span class="p">,</span> <span class="nx">name</span><span class="p">,</span> <span class="nx">nName</span><span class="p">,</span> <span class="nx">ngAttrName</span><span class="p">,</span> <span class="nx">value</span><span class="p">,</span> <span class="nx">isNgAttr</span><span class="p">,</span> <span class="nx">nAttrs</span> <span class="o">=</span> <span class="nx">node</span><span class="p">.</span><span class="nx">attributes</span><span class="p">,</span>
+             <span class="nx">j</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="nx">jj</span> <span class="o">=</span> <span class="nx">nAttrs</span> <span class="o">&amp;&amp;</span> <span class="nx">nAttrs</span><span class="p">.</span><span class="nx">length</span><span class="p">;</span> <span class="nx">j</span> <span class="o">&lt;</span> <span class="nx">jj</span><span class="p">;</span> <span class="nx">j</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+      <span class="kd">var</span> <span class="nx">attrStartName</span> <span class="o">=</span> <span class="kc">false</span><span class="p">;</span>
+      <span class="kd">var</span> <span class="nx">attrEndName</span> <span class="o">=</span> <span class="kc">false</span><span class="p">;</span>
+ 
+      <span class="nx">attr</span> <span class="o">=</span> <span class="nx">nAttrs</span><span class="p">[</span><span class="nx">j</span><span class="p">];</span>
+      <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nx">msie</span> <span class="o">||</span> <span class="nx">msie</span> <span class="o">&gt;=</span> <span class="mi">8</span> <span class="o">||</span> <span class="nx">attr</span><span class="p">.</span><span class="nx">specified</span><span class="p">)</span> <span class="p">{</span>
+        <span class="nx">name</span> <span class="o">=</span> <span class="nx">attr</span><span class="p">.</span><span class="nx">name</span><span class="p">;</span>
+        <span class="nx">value</span> <span class="o">=</span> <span class="nx">trim</span><span class="p">(</span><span class="nx">attr</span><span class="p">.</span><span class="nx">value</span><span class="p">);</span>
+ 
+        <span class="c1">// support ngAttr attribute binding</span>
+        <span class="nx">ngAttrName</span> <span class="o">=</span> <span class="nx">directiveNormalize</span><span class="p">(</span><span class="nx">name</span><span class="p">);</span>
+        <span class="k">if</span> <span class="p">(</span><span class="nx">isNgAttr</span> <span class="o">=</span> <span class="nx">NG_ATTR_BINDING</span><span class="p">.</span><span class="nx">test</span><span class="p">(</span><span class="nx">ngAttrName</span><span class="p">))</span> <span class="p">{</span>
+          <span class="nx">name</span> <span class="o">=</span> <span class="nx">snake_case</span><span class="p">(</span><span class="nx">ngAttrName</span><span class="p">.</span><span class="nx">substr</span><span class="p">(</span><span class="mi">6</span><span class="p">),</span> <span class="s1">&#39;-&#39;</span><span class="p">);</span>
+        <span class="p">}</span>
+ 
+        <span class="kd">var</span> <span class="nx">directiveNName</span> <span class="o">=</span> <span class="nx">ngAttrName</span><span class="p">.</span><span class="nx">replace</span><span class="p">(</span><span class="sr">/(Start|End)$/</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">);</span>
+        <span class="k">if</span> <span class="p">(</span><span class="nx">ngAttrName</span> <span class="o">===</span> <span class="nx">directiveNName</span> <span class="o">+</span> <span class="s1">&#39;Start&#39;</span><span class="p">)</span> <span class="p">{</span>
+          <span class="nx">attrStartName</span> <span class="o">=</span> <span class="nx">name</span><span class="p">;</span>
+          <span class="nx">attrEndName</span> <span class="o">=</span> <span class="nx">name</span><span class="p">.</span><span class="nx">substr</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nx">name</span><span class="p">.</span><span class="nx">length</span> <span class="o">-</span> <span class="mi">5</span><span class="p">)</span> <span class="o">+</span> <span class="s1">&#39;end&#39;</span><span class="p">;</span>
+          <span class="nx">name</span> <span class="o">=</span> <span class="nx">name</span><span class="p">.</span><span class="nx">substr</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nx">name</span><span class="p">.</span><span class="nx">length</span> <span class="o">-</span> <span class="mi">6</span><span class="p">);</span>
+        <span class="p">}</span>
+ 
+        <span class="c1">//此处是解析属性形式的指令名</span>
+        <span class="nx">nName</span> <span class="o">=</span> <span class="nx">directiveNormalize</span><span class="p">(</span><span class="nx">name</span><span class="p">.</span><span class="nx">toLowerCase</span><span class="p">());</span>
+        <span class="nx">attrsMap</span><span class="p">[</span><span class="nx">nName</span><span class="p">]</span> <span class="o">=</span> <span class="nx">name</span><span class="p">;</span>
+        <span class="k">if</span> <span class="p">(</span><span class="nx">isNgAttr</span> <span class="o">||</span> <span class="o">!</span><span class="nx">attrs</span><span class="p">.</span><span class="nx">hasOwnProperty</span><span class="p">(</span><span class="nx">nName</span><span class="p">))</span> <span class="p">{</span>
+            <span class="nx">attrs</span><span class="p">[</span><span class="nx">nName</span><span class="p">]</span> <span class="o">=</span> <span class="nx">value</span><span class="p">;</span>
+            <span class="k">if</span> <span class="p">(</span><span class="nx">getBooleanAttrName</span><span class="p">(</span><span class="nx">node</span><span class="p">,</span> <span class="nx">nName</span><span class="p">))</span> <span class="p">{</span>
+              <span class="nx">attrs</span><span class="p">[</span><span class="nx">nName</span><span class="p">]</span> <span class="o">=</span> <span class="kc">true</span><span class="p">;</span> <span class="c1">// presence means true</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+        <span class="nx">addAttrInterpolateDirective</span><span class="p">(</span><span class="nx">node</span><span class="p">,</span> <span class="nx">directives</span><span class="p">,</span> <span class="nx">value</span><span class="p">,</span> <span class="nx">nName</span><span class="p">);</span>
+        <span class="nx">addDirective</span><span class="p">(</span><span class="nx">directives</span><span class="p">,</span> <span class="nx">nName</span><span class="p">,</span> <span class="s1">&#39;A&#39;</span><span class="p">,</span> <span class="nx">maxPriority</span><span class="p">,</span> <span class="nx">ignoreDirective</span><span class="p">,</span> <span class="nx">attrStartName</span><span class="p">,</span>
+                      <span class="nx">attrEndName</span><span class="p">);</span>
+      <span class="p">}</span>
+    <span class="p">}</span></code></pre></div>
+
+<p>上面一处是解析标签形式的指令名，调用了directiveNormalize(nodeName_(node).toLowerCase())<br>
+另一处是解析属性形式的指令名，调用了directiveNormalize(name.toLowerCase())<br>
+两处都使用了toLowerCase()<br>
+所以解析指令的<strong>第一步：将指令名转为小写.</strong>  </p>
+
+<p>继续看directiveNormalize()函数</p>
+
+<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kd">var</span> <span class="nx">PREFIX_REGEXP</span> <span class="o">=</span> <span class="sr">/^(x[\:\-_]|data[\:\-_])/i</span><span class="p">;</span>
+<span class="cm">/**</span>
+<span class="cm"> * Converts all accepted directives format into proper directive name.</span>
+<span class="cm"> * All of these will become &#39;myDirective&#39;:</span>
+<span class="cm"> *   my:Directive</span>
+<span class="cm"> *   my-directive</span>
+<span class="cm"> *   x-my-directive</span>
+<span class="cm"> *   data-my:directive</span>
+<span class="cm"> *</span>
+<span class="cm"> * Also there is special case for Moz prefix starting with upper case letter.</span>
+<span class="cm"> * @param name Name to normalize</span>
+<span class="cm"> */</span>
+<span class="kd">function</span> <span class="nx">directiveNormalize</span><span class="p">(</span><span class="nx">name</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">return</span> <span class="nx">camelCase</span><span class="p">(</span><span class="nx">name</span><span class="p">.</span><span class="nx">replace</span><span class="p">(</span><span class="nx">PREFIX_REGEXP</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">));</span>
+<span class="p">}</span></code></pre></div>
+
+<p>它使用用了name.replace(PREFIX<em>REGEXP, &#39;&#39;)，它的作用是去掉x和data开始的前缀
+所以解析指令的 **第二步:去掉以x-和data-开头的前缀(例如 x- x: x</em> data- data: data_ 忽略大小写)**  </p>
+
+<p>再继续看camelCase()函数</p>
+
+<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kd">var</span> <span class="nx">SPECIAL_CHARS_REGEXP</span> <span class="o">=</span> <span class="sr">/([\:\-\_]+(.))/g</span><span class="p">;</span>
+<span class="kd">var</span> <span class="nx">MOZ_HACK_REGEXP</span> <span class="o">=</span> <span class="sr">/^moz([A-Z])/</span><span class="p">;</span>
+<span class="kd">var</span> <span class="nx">jqLiteMinErr</span> <span class="o">=</span> <span class="nx">minErr</span><span class="p">(</span><span class="s1">&#39;jqLite&#39;</span><span class="p">);</span>
+ 
+<span class="cm">/**</span>
+<span class="cm"> * Converts snake_case to camelCase.</span>
+<span class="cm"> * Also there is special case for Moz prefix starting with upper case letter.</span>
+<span class="cm"> * @param name Name to normalize</span>
+<span class="cm"> */</span>
+<span class="kd">function</span> <span class="nx">camelCase</span><span class="p">(</span><span class="nx">name</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">return</span> <span class="nx">name</span><span class="p">.</span>
+    <span class="nx">replace</span><span class="p">(</span><span class="nx">SPECIAL_CHARS_REGEXP</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">_</span><span class="p">,</span> <span class="nx">separator</span><span class="p">,</span> <span class="nx">letter</span><span class="p">,</span> <span class="nx">offset</span><span class="p">)</span> <span class="p">{</span>
+      <span class="k">return</span> <span class="nx">offset</span> <span class="o">?</span> <span class="nx">letter</span><span class="p">.</span><span class="nx">toUpperCase</span><span class="p">()</span> <span class="o">:</span> <span class="nx">letter</span><span class="p">;</span>
+    <span class="p">}).</span>
+    <span class="nx">replace</span><span class="p">(</span><span class="nx">MOZ_HACK_REGEXP</span><span class="p">,</span> <span class="s1">&#39;Moz$1&#39;</span><span class="p">);</span>
+<span class="p">}</span></code></pre></div>
+
+<p>使用了两个replace替换字符，第二个replace不用管，重点看第一个replace，它是什么作用？</p>
+
+<p>把它拿出来看看</p>
+
+<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kd">var</span> <span class="nx">SPECIAL_CHARS_REGEXP</span> <span class="o">=</span> <span class="sr">/([\:\-\_]+(.))/g</span><span class="p">;</span>
+<span class="kd">function</span> <span class="nx">camelCase</span><span class="p">(</span><span class="nx">name</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">return</span> <span class="nx">name</span><span class="p">.</span>
+    <span class="nx">replace</span><span class="p">(</span><span class="nx">SPECIAL_CHARS_REGEXP</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">_</span><span class="p">,</span> <span class="nx">separator</span><span class="p">,</span> <span class="nx">letter</span><span class="p">,</span> <span class="nx">offset</span><span class="p">)</span> <span class="p">{</span>
+      <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;_:&quot;</span> <span class="o">+</span> <span class="nx">_</span><span class="p">)</span>
+      <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;separator:&quot;</span> <span class="o">+</span> <span class="nx">separator</span><span class="p">)</span>
+      <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;letter:&quot;</span> <span class="o">+</span> <span class="nx">letter</span><span class="p">)</span>
+      <span class="k">return</span> <span class="nx">offset</span> <span class="o">?</span> <span class="nx">letter</span><span class="p">.</span><span class="nx">toUpperCase</span><span class="p">()</span> <span class="o">:</span> <span class="nx">letter</span><span class="p">;</span>
+    <span class="p">}).</span>
+<span class="p">}</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;----my-directive&quot;</span><span class="p">)</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">camelCase</span><span class="p">(</span><span class="nx">my</span><span class="o">-</span><span class="nx">directive</span><span class="p">));</span>
+ 
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;----mydirective&quot;</span><span class="p">)</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">camelCase</span><span class="p">(</span><span class="nx">my</span><span class="o">-</span><span class="nx">directive</span><span class="p">));</span>
+ 
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;----mydirectiveworld&quot;</span><span class="p">)</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">camelCase</span><span class="p">(</span><span class="nx">my</span><span class="o">-</span><span class="nx">directive</span><span class="p">));</span>
+<span class="cm">/* </span>
+<span class="cm">输出内容</span>
+<span class="cm">----my-directive</span>
+<span class="cm">_:-d</span>
+<span class="cm">separator:-d</span>
+<span class="cm">letter:d</span>
+<span class="cm">myDirective</span>
+<span class="cm"> </span>
+<span class="cm">----mydirective</span>
+<span class="cm">mydirective</span>
+<span class="cm"> </span>
+<span class="cm">----mydirectiveworld</span>
+<span class="cm">mydirectiveworld</span>
+<span class="cm">*/</span></code></pre></div>
+
+<p>可以看到第一个replace作用是生成驼峰指令名
+所以解析指令的<strong>第三步：根据分割符(: - _)标记，将字符转换为驼峰形式</strong></p>
+
+<p>关于replace函数的说明，可以看看这篇文章
+http://yongqing.is-programmer.com/posts/56305.html</p>
+
+<p>更多指令名与指令对应的示例</p>
+
+<div class="highlight"><pre><code class="language-text" data-lang="text">以分割符&quot;-&quot;为例
+mymenu --&gt; mymenu   正确
+mymenu --&gt; myMenu   错误
+mymenu --&gt; my-Menu  错误
+ 
+myMenu --&gt; my-Menu  正确
+myMenu --&gt; myMenu   错误
+myMenu --&gt; mymenu   错误
+ 
+MyMenu --&gt; x-MyMenu 正确
+MyMenu --&gt; MyMenu   错误
+MyMenu --&gt; mymenu   错误
+ 
+myProductsMenu --&gt; my-Products-Menu   正确
+myProductsMenu --&gt; myProductsMenu     错误
+myProductsMenu --&gt; my-ProductsMenu    错误</code></pre></div>
+
+<h2>总结</h2>
+
+<p>指令的匹配过程<br>
+1. 将指令名转换为小写.<br>
+2. 去掉以x-和data-开头的前缀(例如 x- x: x_ data- data: data_ 忽略大小写) 
+3. 根据分割符(: - _)，转换为驼峰形式<br>
+其实只要注意一点: 匹配过程以定义时的指令名为准，分割符是用来标识驼峰的(angular没有能力识别单词，分割符的一个作用是标识驼峰).  </p>
+
+    <br/>
+    <div style="margin-top:10px;margin-bottom:10px">
+      
+      <span class="next">
+        上篇：
+        <a href="/js/2014/08/11/js.html">
+          javascript replace函数
+        </a>
+      </span>
+       
+      
+      <span class="prev">
+        下篇：
+        <a href="/linux/2014/08/22/linux.html">
+          判断端口通不通的几种方法
+        </a>
+      </span>
+      
+    </div>
+    <hr>
+    <!-- Blog Comments -->
+    <div class="media">
+        <!-- UY BEGIN -->
+        <div id="uyan_frame"></div>
+        <script type="text/javascript" src="http://v2.uyan.cc/code/uyan.js?uid=1965284"></script>
+        <!-- UY END -->
+    </div>
+</div>
+
+          </div>
+      </div>
+      <!-- Footer -->
+      <footer>
+        <div class="row">
+          <div class="col-lg-12">
+            <p align="center"></p>
+          </div>
+        </div>
+      </footer>
+    </div>
+    <script src="/static/js/blog.js"></script>
+  </body>
+</html>
+

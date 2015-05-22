@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en">
+  
+  <head>
+    <meta charset="utf-8">
+    <meta name="baidu-site-verification" content="fk7KxxZA62" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>
+      webpy+DBUtils是如何将数据库连接数占满的
+    </title>
+    <!--
+    <link rel="shortcut icon" type="image/x-icon" href="/static/images/favicon.ico" media="screen" />
+     -->
+    <!-- Bootstrap Core CSS -->
+    <link href="/static/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/static/bootstrap/css/bootstrap-theme.min.css" rel="stylesheet">
+    <link href="/static/css/blog.css" rel="stylesheet">
+    <link href="/static/css/pygments.css" rel="stylesheet">
+    <script src="/static/js/jquery-1.11.0.js"></script>
+    <script src="/static/bootstrap/js/bootstrap.min.js"></script>
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media
+    queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file://
+    -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js">
+      </script>
+      <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js">
+      </script>
+    <![endif]-->
+    <script>
+        var _hmt = _hmt || [];
+        (function() {
+          var hm = document.createElement("script");
+          hm.src = "//hm.baidu.com/hm.js?4a7b2b2a1ee8b8686ec632c195bbd833";
+          var s = document.getElementsByTagName("script")[0]; 
+          s.parentNode.insertBefore(hm, s);
+        })();
+    </script>
+  </head>
+  
+  <body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-inverse navbar-fixed-top " role="navigation">
+      <div class="container">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+          <a class="navbar-brand " href="/" >妙音</a>
+        </div>
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse">
+            <ul class="nav navbar-nav">
+                <li><a href="/categories.html">分 类</a></li>
+                <li><a href="/fofa.html">学佛</a></li>
+                <li><a href="/tools.html">工具</a></li>
+            </ul>
+            <form class="navbar-form navbar-right" role="search" action="https://www.google.com/search" method="get">
+              <div class="input-group">
+                <input type="text" name="q" class="form-control search-query" placeholder="搜索">
+                <input type="hidden" name="ie" value="UTF-8" />
+                <input type="hidden" name="sitesearch" value="www.zhulinjingshe.cn" />
+              </div>
+            </form>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Page Content -->
+    <div class="container">
+      <div class="content">
+          <div class="row">
+            <!-- Blog Post -->
+<!-- Title -->
+<h2>
+  webpy+DBUtils是如何将数据库连接数占满的
+  <div class="post-date">
+        妙音 posted @
+        <span class="glyphicon glyphicon-time"></span>
+        2014-01-10 11:41
+        in webpy with tags python
+  </div>
+</h2>
+<!-- Author -->
+<hr>
+
+<div class="col-md-10">
+    <p>webpy简单易用，而且非常轻量。这些特点很容易让人忽略它作为web服务器的主要目标，而把它当作一个小模块使用。<br>
+现在就把它当作小模块，只使用它操作数据库的api.</p>
+
+<p>下面是个小程序，目的就是访问数据库，然后关闭连接。</p>
+
+<div class="highlight"><pre><code class="language-python" data-lang="python"><span class="lineno"> 1</span> <span class="kn">import</span> <span class="nn">web</span>
+<span class="lineno"> 2</span>  
+<span class="lineno"> 3</span> <span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
+<span class="lineno"> 4</span>     <span class="n">db</span> <span class="o">=</span> <span class="n">web</span><span class="o">.</span><span class="n">database</span><span class="p">(</span><span class="n">port</span><span class="o">=</span><span class="mi">5432</span><span class="p">,</span> <span class="n">host</span><span class="o">=</span><span class="s">&#39;localhost&#39;</span><span class="p">,</span> <span class="n">dbn</span><span class="o">=</span><span class="s">&#39;postgres&#39;</span><span class="p">,</span> <span class="n">db</span><span class="o">=</span><span class="s">&#39;tax&#39;</span><span class="p">,</span>
+<span class="lineno"> 5</span>                       <span class="n">user</span><span class="o">=</span><span class="s">&#39;postgres&#39;</span><span class="p">,</span> <span class="n">pw</span><span class="o">=</span><span class="s">&#39;postgres&#39;</span><span class="p">)</span>
+<span class="lineno"> 6</span>     <span class="n">rs</span> <span class="o">=</span> <span class="n">db</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s">&quot;select count(*) as count from pg_stat_activity&quot;</span><span class="p">)</span>
+<span class="lineno"> 7</span>     <span class="k">print</span> <span class="nb">list</span><span class="p">(</span><span class="n">rs</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">count</span>
+<span class="lineno"> 8</span>     <span class="n">db</span><span class="o">.</span><span class="n">ctx</span><span class="o">.</span><span class="n">db</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+<span class="lineno"> 9</span>  
+<span class="lineno">10</span> <span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">&#39;__main__&#39;</span><span class="p">:</span>
+<span class="lineno">11</span>     <span class="n">main</span><span class="p">()</span></code></pre></div>
+
+<p>在正常情况下，上面程序表现很正常。不会有任何问题.</p>
+
+<p>如果变成周期程序，并且安装了DBUtils模块</p>
+
+<div class="highlight"><pre><code class="language-python" data-lang="python"><span class="lineno"> 1</span> <span class="kn">import</span> <span class="nn">time</span>
+<span class="lineno"> 2</span> <span class="kn">import</span> <span class="nn">web</span>
+<span class="lineno"> 3</span> <span class="kn">import</span> <span class="nn">psycopg2</span>
+<span class="lineno"> 4</span>  
+<span class="lineno"> 5</span> <span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
+<span class="lineno"> 6</span>     <span class="n">db</span> <span class="o">=</span> <span class="n">web</span><span class="o">.</span><span class="n">database</span><span class="p">(</span><span class="n">port</span><span class="o">=</span><span class="mi">5432</span><span class="p">,</span> <span class="n">host</span><span class="o">=</span><span class="s">&#39;localhost&#39;</span><span class="p">,</span> <span class="n">dbn</span><span class="o">=</span><span class="s">&#39;postgres&#39;</span><span class="p">,</span> <span class="n">db</span><span class="o">=</span><span class="s">&#39;tax&#39;</span><span class="p">,</span>
+<span class="lineno"> 7</span>                       <span class="n">user</span><span class="o">=</span><span class="s">&#39;postgres&#39;</span><span class="p">,</span> <span class="n">pw</span><span class="o">=</span><span class="s">&#39;postgres&#39;</span><span class="p">)</span>
+<span class="lineno"> 8</span>     <span class="n">rs</span> <span class="o">=</span> <span class="n">db</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s">&quot;select count(*) as count from pg_stat_activity&quot;</span><span class="p">)</span>
+<span class="lineno"> 9</span>     <span class="k">print</span> <span class="nb">list</span><span class="p">(</span><span class="n">rs</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">count</span>
+<span class="lineno">10</span>     <span class="n">db</span><span class="o">.</span><span class="n">ctx</span><span class="o">.</span><span class="n">db</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+<span class="lineno">11</span>  
+<span class="lineno">12</span> <span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">&#39;__main__&#39;</span><span class="p">:</span>
+<span class="lineno">13</span>     <span class="k">while</span> <span class="bp">True</span><span class="p">:</span>
+<span class="lineno">14</span>         <span class="n">main</span><span class="p">()</span>
+<span class="lineno">15</span>         <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span></code></pre></div>
+
+<p>输出的count值不断增加，最终将连接数占满。</p>
+
+<p>为什么close没有效果，数据库连接数不断增加？</p>
+
+<p>第一个问题：close关闭的是什么？
+在有DBUitls时，close关闭时的PooledDB.connection()产生的连接.
+在无DBUtils时，close关闭的时psycopg2.connect()产生的连接.</p>
+
+<p>第二个问题: 在有DBUtils时close为什么不会减少连接数？
+写了段代码，来看看close是怎么回事</p>
+
+<div class="highlight"><pre><code class="language-python" data-lang="python"><span class="lineno"> 1</span> <span class="kn">import</span> <span class="nn">psycopg2</span>
+<span class="lineno"> 2</span> <span class="kn">from</span> <span class="nn">DBUtils</span> <span class="kn">import</span> <span class="n">PooledDB</span>
+<span class="lineno"> 3</span>  
+<span class="lineno"> 4</span> <span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
+<span class="lineno"> 5</span>     <span class="c">#mincached,maxconnections限制连接池中的连接数</span>
+<span class="lineno"> 6</span>     <span class="n">pool</span> <span class="o">=</span> <span class="n">PooledDB</span><span class="o">.</span><span class="n">PooledDB</span><span class="p">(</span><span class="n">psycopg2</span><span class="p">,</span> <span class="n">port</span><span class="o">=</span><span class="mi">5432</span><span class="p">,</span> <span class="n">host</span><span class="o">=</span><span class="s">&#39;localhost&#39;</span><span class="p">,</span> <span class="n">dbname</span><span class="o">=</span><span class="s">&#39;postgres&#39;</span><span class="p">,</span> <span class="n">database</span><span class="o">=</span><span class="s">&#39;tax&#39;</span><span class="p">,</span>
+<span class="lineno"> 7</span>                              <span class="n">user</span><span class="o">=</span><span class="s">&#39;postgres&#39;</span><span class="p">,</span> <span class="n">password</span><span class="o">=</span><span class="s">&#39;postgres&#39;</span><span class="p">,</span>
+<span class="lineno"> 8</span>                              <span class="n">mincached</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">maxconnections</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+<span class="lineno"> 9</span>     <span class="c"># 从连接池中取一个连接</span>
+<span class="lineno">10</span>     <span class="n">conn</span> <span class="o">=</span> <span class="n">pool</span><span class="o">.</span><span class="n">connection</span><span class="p">()</span>
+<span class="lineno">11</span>     <span class="n">cur</span> <span class="o">=</span> <span class="n">conn</span><span class="o">.</span><span class="n">cursor</span><span class="p">()</span>
+<span class="lineno">12</span>     <span class="n">cur</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="s">&quot;select count(*) as count from pg_stat_activity&quot;</span><span class="p">)</span>
+<span class="lineno">13</span>     <span class="n">rs</span> <span class="o">=</span> <span class="n">cur</span><span class="o">.</span><span class="n">fetchone</span><span class="p">()</span>
+<span class="lineno">14</span>     <span class="k">print</span> <span class="nb">list</span><span class="p">(</span><span class="n">rs</span><span class="p">)</span>
+<span class="lineno">15</span>     <span class="n">cur</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+<span class="lineno">16</span>     <span class="c"># 不会影响这个连接池的连接数量. pool.close()关闭连接池，会关闭所有连接.</span>
+<span class="lineno">17</span>     <span class="n">conn</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+<span class="lineno">18</span>  
+<span class="lineno">19</span> <span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">&#39;__main__&#39;</span><span class="p">:</span>
+<span class="lineno">20</span>     <span class="k">while</span> <span class="bp">True</span><span class="p">:</span>
+<span class="lineno">21</span>         <span class="n">main</span><span class="p">()</span>
+<span class="lineno">22</span>         <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span></code></pre></div>
+
+<p>发现连接数始终不是变，单个连接的close，不会影响到这个连接池。</p>
+
+<p>试试将上面cur.close() conn.close()注释掉，会导致连接数增加吗？<br>
+答案也是不会. pool是局部变量，变量销毁，连接会自动关闭。  </p>
+
+<p>得到结论：
+* 单个连接关闭，不会影响连接池<br>
+* 连接池变量释放，或者程序停止，连接会自动关闭  </p>
+
+<p>可推断webpy中定有全局变量，不释放而导致连接增加.</p>
+
+<p>顺着这个思路阅读web源码，发现web.ctx是个TreadedDict类型</p>
+
+<div class="highlight"><pre><code class="language-python" data-lang="python"><span class="lineno"> 1</span> <span class="k">class</span> <span class="nc">ThreadedDict</span><span class="p">(</span><span class="n">threadlocal</span><span class="p">):</span>
+<span class="lineno"> 2</span>     <span class="sd">&quot;&quot;&quot;</span>
+<span class="lineno"> 3</span> <span class="sd">    Thread local storage.</span>
+<span class="lineno"> 4</span> <span class="sd"> </span>
+<span class="lineno"> 5</span> <span class="sd">        &gt;&gt;&gt; d = ThreadedDict()</span>
+<span class="lineno"> 6</span> <span class="sd">        &gt;&gt;&gt; d.x = 1</span>
+<span class="lineno"> 7</span> <span class="sd">        &gt;&gt;&gt; d.x</span>
+<span class="lineno"> 8</span> <span class="sd">        1</span>
+<span class="lineno"> 9</span> <span class="sd">        &gt;&gt;&gt; import threading</span>
+<span class="lineno">10</span> <span class="sd">        &gt;&gt;&gt; def f(): d.x = 2</span>
+<span class="lineno">11</span> <span class="sd">        ...</span>
+<span class="lineno">12</span> <span class="sd">        &gt;&gt;&gt; t = threading.Thread(target=f)</span>
+<span class="lineno">13</span> <span class="sd">        &gt;&gt;&gt; t.start()</span>
+<span class="lineno">14</span> <span class="sd">        &gt;&gt;&gt; t.join()</span>
+<span class="lineno">15</span> <span class="sd">        &gt;&gt;&gt; d.x</span>
+<span class="lineno">16</span> <span class="sd">        1</span>
+<span class="lineno">17</span> <span class="sd">    &quot;&quot;&quot;</span>
+<span class="lineno">18</span>     <span class="c"># 原因就在这里</span>
+<span class="lineno">19</span>     <span class="n">_instances</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
+<span class="lineno">20</span>  
+<span class="lineno">21</span>     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="lineno">22</span>         <span class="n">ThreadedDict</span><span class="o">.</span><span class="n">_instances</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+<span class="lineno">23</span>  
+<span class="lineno">24</span>     <span class="k">def</span> <span class="nf">__del__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="lineno">25</span>         <span class="n">ThreadedDict</span><span class="o">.</span><span class="n">_instances</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+<span class="lineno">26</span>  
+<span class="lineno">27</span>     <span class="k">def</span> <span class="nf">__hash__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="lineno">28</span>         <span class="k">return</span> <span class="nb">id</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+<span class="lineno">29</span>     <span class="o">....</span></code></pre></div>
+
+<p>原来它有个静态属性ThreadedDict._instances保存每个实例，而每个实例中又保存web.database产生的PooledDB对象.<br>
+所以pool一直不释放。  </p>
+
+<p>所以原因就是: web.database每次新建一个PooledDB对象，而对象又保存在全局变量TreadedDict._instance中.<br>
+由于不断新建连接池，又不释放连接池，最终导致连接数不断增加。  </p>
+
+<p>webpy如何解决这个问题？
+使用polling参数，禁止连接池</p>
+
+<div class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">db</span> <span class="o">=</span> <span class="n">web</span><span class="o">.</span><span class="n">database</span><span class="p">(</span><span class="n">port</span><span class="o">=</span><span class="mi">5432</span><span class="p">,</span> <span class="n">host</span><span class="o">=</span><span class="s">&#39;localhost&#39;</span><span class="p">,</span> <span class="n">dbn</span><span class="o">=</span><span class="s">&#39;postgres&#39;</span><span class="p">,</span> <span class="n">db</span><span class="o">=</span><span class="s">&#39;tax&#39;</span><span class="p">,</span>
+                  <span class="n">user</span><span class="o">=</span><span class="s">&#39;postgres&#39;</span><span class="p">,</span> <span class="n">pw</span><span class="o">=</span><span class="s">&#39;postgres&#39;</span><span class="p">,</span> <span class="n">pooling</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span></code></pre></div>
+
+<p>这上面得出的结论对oracle和其它类型的数据库同样有效.</p>
+
+    <br/>
+    <div style="margin-top:10px;margin-bottom:10px">
+      
+      <span class="next">
+        上篇：
+        <a href="/webpy/2014/01/09/python.html">
+          线程里的全局变量threading.local
+        </a>
+      </span>
+       
+      
+      <span class="prev">
+        下篇：
+        <a href="/linux/2014/01/13/linux.html">
+          webpy+DBUtils是如何将数据库连接数占满的
+        </a>
+      </span>
+      
+    </div>
+    <hr>
+    <!-- Blog Comments -->
+    <div class="media">
+        <!-- UY BEGIN -->
+        <div id="uyan_frame"></div>
+        <script type="text/javascript" src="http://v2.uyan.cc/code/uyan.js?uid=1965284"></script>
+        <!-- UY END -->
+    </div>
+</div>
+
+          </div>
+      </div>
+      <!-- Footer -->
+      <footer>
+        <div class="row">
+          <div class="col-lg-12">
+            <p align="center"></p>
+          </div>
+        </div>
+      </footer>
+    </div>
+    <script src="/static/js/blog.js"></script>
+  </body>
+</html>
+

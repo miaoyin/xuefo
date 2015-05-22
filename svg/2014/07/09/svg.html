@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+  
+  <head>
+    <meta charset="utf-8">
+    <meta name="baidu-site-verification" content="fk7KxxZA62" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>
+      理解svg中画箭头代码[viewbox,refX,refY]
+    </title>
+    <!--
+    <link rel="shortcut icon" type="image/x-icon" href="/static/images/favicon.ico" media="screen" />
+     -->
+    <!-- Bootstrap Core CSS -->
+    <link href="/static/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/static/bootstrap/css/bootstrap-theme.min.css" rel="stylesheet">
+    <link href="/static/css/blog.css" rel="stylesheet">
+    <link href="/static/css/pygments.css" rel="stylesheet">
+    <script src="/static/js/jquery-1.11.0.js"></script>
+    <script src="/static/bootstrap/js/bootstrap.min.js"></script>
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media
+    queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file://
+    -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js">
+      </script>
+      <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js">
+      </script>
+    <![endif]-->
+    <script>
+        var _hmt = _hmt || [];
+        (function() {
+          var hm = document.createElement("script");
+          hm.src = "//hm.baidu.com/hm.js?4a7b2b2a1ee8b8686ec632c195bbd833";
+          var s = document.getElementsByTagName("script")[0]; 
+          s.parentNode.insertBefore(hm, s);
+        })();
+    </script>
+  </head>
+  
+  <body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-inverse navbar-fixed-top " role="navigation">
+      <div class="container">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+          <a class="navbar-brand " href="/" >妙音</a>
+        </div>
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse">
+            <ul class="nav navbar-nav">
+                <li><a href="/categories.html">分 类</a></li>
+                <li><a href="/fofa.html">学佛</a></li>
+                <li><a href="/tools.html">工具</a></li>
+            </ul>
+            <form class="navbar-form navbar-right" role="search" action="https://www.google.com/search" method="get">
+              <div class="input-group">
+                <input type="text" name="q" class="form-control search-query" placeholder="搜索">
+                <input type="hidden" name="ie" value="UTF-8" />
+                <input type="hidden" name="sitesearch" value="www.zhulinjingshe.cn" />
+              </div>
+            </form>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Page Content -->
+    <div class="container">
+      <div class="content">
+          <div class="row">
+            <!-- Blog Post -->
+<!-- Title -->
+<h2>
+  理解svg中画箭头代码[viewbox,refX,refY]
+  <div class="post-date">
+        妙音 posted @
+        <span class="glyphicon glyphicon-time"></span>
+        2014-07-09 20:52
+        in svg with tags 
+  </div>
+</h2>
+<!-- Author -->
+<hr>
+
+<div class="col-md-10">
+    <h2>常见示例</h2>
+
+<p>最常见的在线条上画箭头代码  </p>
+
+<div class="highlight"><pre><code class="language-html" data-lang="html"><span class="lineno"> 1</span> <span class="nt">&lt;svg&gt;</span>
+<span class="lineno"> 2</span>     <span class="c">&lt;!-- 预定义marker--&gt;</span>
+<span class="lineno"> 3</span>     <span class="nt">&lt;defs&gt;</span>
+<span class="lineno"> 4</span>         <span class="nt">&lt;marker</span> <span class="na">id=</span><span class="s">&quot;arrow&quot;</span> <span class="na">refX=</span><span class="s">&quot;0&quot;</span> <span class="na">refY=</span><span class="s">&quot;3&quot;</span> <span class="na">markerWidth=</span><span class="s">&quot;20&quot;</span> <span class="na">markerHeight=</span><span class="s">&quot;20&quot;</span> <span class="na">orient=</span><span class="s">&quot;auto&quot;</span><span class="nt">&gt;</span>
+<span class="lineno"> 5</span>             <span class="nt">&lt;path</span> <span class="na">d=</span><span class="s">&quot;M0 0 L0 6 L10 3&quot;</span> <span class="na">style=</span><span class="s">&quot;fill: #ffff;&quot;</span><span class="nt">&gt;&lt;/path&gt;</span>
+<span class="lineno"> 6</span>         <span class="nt">&lt;/marker&gt;</span>
+<span class="lineno"> 7</span>     <span class="nt">&lt;/marker&gt;</span>
+<span class="lineno"> 8</span>     <span class="nt">&lt;/defs&gt;</span>
+<span class="lineno"> 9</span>     <span class="c">&lt;!-- 引用预定义的marker --&gt;</span>
+<span class="lineno">10</span>     <span class="nt">&lt;line</span> <span class="na">class=</span><span class="s">&quot;link&quot;</span> <span class="na">marker-end=</span><span class="s">&quot;url(#arrow)&quot;</span> <span class="na">x1=</span><span class="s">&quot;0&quot;</span> <span class="na">y1=</span><span class="s">&quot;0&quot;</span> <span class="na">x2=</span><span class="s">&quot;80&quot;</span> <span class="na">y2=</span><span class="s">&quot;80&quot;</span><span class="nt">&gt;&lt;/line&gt;</span>
+<span class="lineno">11</span> <span class="nt">&lt;/svg&gt;</span></code></pre></div>
+
+<p>先预定义了一个箭头形状的marker，然后画了一条线，并且将预定义的marker标到线条末端.</p>
+
+<p>画出的图形<br>
+<img src="http://miaoyin.qiniudn.com/2014-07-09-01.png" width="200" /></p>
+
+<p>实现方法是用path画一个三角形并填充到marker中，形成三角marker，之所以用marker是因为，只有marker才能标到其它图形上. 但是marker是怎样被标记线条末端的？在marker中有refX、refY作用就是用来指定线条末点连接到marker上的位置. 连接上后，箭头指向哪边？orient属性则指定marker的方向.</p>
+
+<h2>如何为marker中坐标取值</h2>
+
+<p>首先marker与包含的path共用一个坐标系，如果坐标值不对则会显示不全.<br>
+比如上面marker的显示范围是(0,0)到(20, 20), path的范围是(0,0)到(10,6)，可知道path完全处在marker的显示区域内，因此path可以全部显示.  </p>
+
+<p>如果需改path值，path显示范围为(0,-3)到(10,3)，有一半内容在marker显示区域外，我们看到的就是半个三角形。设置坐标时要知道marker与path是共用同一个坐标系，path坐标不是相对于marker，注意path要在marker的可视范围内  </p>
+
+<div class="highlight"><pre><code class="language-html" data-lang="html"><span class="lineno"> 1</span> <span class="nt">&lt;svg&gt;</span>
+<span class="lineno"> 2</span>     <span class="c">&lt;!-- 预定义marker--&gt;</span>
+<span class="lineno"> 3</span>     <span class="nt">&lt;defs&gt;</span>
+<span class="lineno"> 4</span>         <span class="nt">&lt;marker</span> <span class="na">id=</span><span class="s">&quot;arrow&quot;</span> <span class="na">refX=</span><span class="s">&quot;0&quot;</span> <span class="na">refY=</span><span class="s">&quot;0&quot;</span> <span class="na">markerWidth=</span><span class="s">&quot;20&quot;</span> <span class="na">markerHeight=</span><span class="s">&quot;20&quot;</span> <span class="na">orient=</span><span class="s">&quot;auto&quot;</span><span class="nt">&gt;</span>
+<span class="lineno"> 5</span>             <span class="nt">&lt;path</span> <span class="na">d=</span><span class="s">&quot;M0 -3 L0 3 L10 0&quot;</span> <span class="na">style=</span><span class="s">&quot;fill: #ffff;&quot;</span><span class="nt">&gt;&lt;/path&gt;</span>
+<span class="lineno"> 6</span>         <span class="nt">&lt;/marker&gt;</span>
+<span class="lineno"> 7</span>     <span class="nt">&lt;/marker&gt;</span>
+<span class="lineno"> 8</span>     <span class="nt">&lt;/defs&gt;</span>
+<span class="lineno"> 9</span>     <span class="c">&lt;!-- 引用预定义的marker --&gt;</span>
+<span class="lineno">10</span>     <span class="nt">&lt;line</span> <span class="na">class=</span><span class="s">&quot;link&quot;</span> <span class="na">marker-end=</span><span class="s">&quot;url(#arrow)&quot;</span> <span class="na">x1=</span><span class="s">&quot;0&quot;</span> <span class="na">y1=</span><span class="s">&quot;0&quot;</span> <span class="na">x2=</span><span class="s">&quot;80&quot;</span> <span class="na">y2=</span><span class="s">&quot;80&quot;</span><span class="nt">&gt;&lt;/line&gt;</span>
+<span class="lineno">11</span> <span class="nt">&lt;/svg&gt;</span></code></pre></div>
+
+<p>如下<br>
+<img src="http://miaoyin.qiniudn.com/2014-07-09-02.png" width="200" /></p>
+
+<h2>理解marker的viewBox属性</h2>
+
+<p>用法viewBox(xmin, ymin, width, height)  </p>
+
+<p>查看文档可知道viewBox作用是拉伸图形。它是如何控制拉伸的？要想拉伸的话，指定长宽比例就可以了，怎么会用到xmin, ymin, width, height这些值，它们是和拉伸有什么关系？怎么理解？  </p>
+
+<p>实际上拉伸只是它的一个功能，换一种叫法就很好理解: 取景框. 它使用xmin,ymin,width,height这些参数确定取景范围，然后将取到的景象，放到marker中，并且充满整个marker. 如果取到的景象比marker可视范围小，则景象会被放大再充满marker；如果取到的景象比marker可视范围大，怎取景会被缩小再充满marker. 所以viewbox有两个功能：一是填充功能；二是拉伸.  </p>
+
+<p>比如上面只显示半个三角形，可以通过设置viewbox让它，在marker中完整显示.</p>
+
+<div class="highlight"><pre><code class="language-html" data-lang="html"><span class="lineno"> 1</span> <span class="nt">&lt;svg&gt;</span>
+<span class="lineno"> 2</span>     <span class="c">&lt;!-- 预定义marker--&gt;</span>
+<span class="lineno"> 3</span>     <span class="nt">&lt;defs&gt;</span>
+<span class="lineno"> 4</span>         <span class="nt">&lt;marker</span> <span class="na">id=</span><span class="s">&quot;arrow&quot;</span> <span class="na">refX=</span><span class="s">&quot;0&quot;</span> <span class="na">refY=</span><span class="s">&quot;0&quot;</span> <span class="na">markerWidth=</span><span class="s">&quot;20&quot;</span> <span class="na">markerHeight=</span><span class="s">&quot;20&quot;</span> <span class="na">orient=</span><span class="s">&quot;auto&quot;</span> <span class="na">viewBox=</span><span class="s">&quot;0, -3, 10, 6&quot;</span> <span class="nt">&gt;</span>
+<span class="lineno"> 5</span>             <span class="nt">&lt;path</span> <span class="na">d=</span><span class="s">&quot;M0 -3 L0 3 L10 0&quot;</span> <span class="na">style=</span><span class="s">&quot;fill: #ffff;&quot;</span><span class="nt">&gt;&lt;/path&gt;</span>
+<span class="lineno"> 6</span>         <span class="nt">&lt;/marker&gt;</span>
+<span class="lineno"> 7</span>     <span class="nt">&lt;/marker&gt;</span>
+<span class="lineno"> 8</span>     <span class="nt">&lt;/defs&gt;</span>
+<span class="lineno"> 9</span>     <span class="c">&lt;!-- 引用预定义的marker --&gt;</span>
+<span class="lineno">10</span>     <span class="nt">&lt;line</span> <span class="na">class=</span><span class="s">&quot;link&quot;</span> <span class="na">marker-end=</span><span class="s">&quot;url(#arrow)&quot;</span> <span class="na">x1=</span><span class="s">&quot;0&quot;</span> <span class="na">y1=</span><span class="s">&quot;0&quot;</span> <span class="na">x2=</span><span class="s">&quot;80&quot;</span> <span class="na">y2=</span><span class="s">&quot;80&quot;</span><span class="nt">&gt;&lt;/line&gt;</span>
+<span class="lineno">11</span> <span class="nt">&lt;/svg&gt;</span></code></pre></div>
+
+<p>上面viewBox控制了取景范围，正好将整个三角形取出来，再放入长20宽20的marker中，因为viewbox取到的景象长为10宽为6，小于marker大小，要想让三角形充满，则要放大景象，放大的比例长为20/10，宽为20/6.  </p>
+
+<p>显示结果<br>
+<img src="http://miaoyin.qiniudn.com/2014-07-09-03.png" width="200" /></p>
+
+    <br/>
+    <div style="margin-top:10px;margin-bottom:10px">
+      
+      <span class="next">
+        上篇：
+        <a href="/js/2014/06/25/js.html">
+          web前端开发包管理器bower[笔记]
+        </a>
+      </span>
+       
+      
+      <span class="prev">
+        下篇：
+        <a href="/nodejs/2014/07/10/nodejs.html">
+          web路径解析三种方式
+        </a>
+      </span>
+      
+    </div>
+    <hr>
+    <!-- Blog Comments -->
+    <div class="media">
+        <!-- UY BEGIN -->
+        <div id="uyan_frame"></div>
+        <script type="text/javascript" src="http://v2.uyan.cc/code/uyan.js?uid=1965284"></script>
+        <!-- UY END -->
+    </div>
+</div>
+
+          </div>
+      </div>
+      <!-- Footer -->
+      <footer>
+        <div class="row">
+          <div class="col-lg-12">
+            <p align="center"></p>
+          </div>
+        </div>
+      </footer>
+    </div>
+    <script src="/static/js/blog.js"></script>
+  </body>
+</html>
+

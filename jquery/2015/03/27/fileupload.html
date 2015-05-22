@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="en">
+  
+  <head>
+    <meta charset="utf-8">
+    <meta name="baidu-site-verification" content="fk7KxxZA62" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>
+      基于python的jQuery File Upload简单示例
+    </title>
+    <!--
+    <link rel="shortcut icon" type="image/x-icon" href="/static/images/favicon.ico" media="screen" />
+     -->
+    <!-- Bootstrap Core CSS -->
+    <link href="/static/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/static/bootstrap/css/bootstrap-theme.min.css" rel="stylesheet">
+    <link href="/static/css/blog.css" rel="stylesheet">
+    <link href="/static/css/pygments.css" rel="stylesheet">
+    <script src="/static/js/jquery-1.11.0.js"></script>
+    <script src="/static/bootstrap/js/bootstrap.min.js"></script>
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media
+    queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file://
+    -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js">
+      </script>
+      <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js">
+      </script>
+    <![endif]-->
+    <script>
+        var _hmt = _hmt || [];
+        (function() {
+          var hm = document.createElement("script");
+          hm.src = "//hm.baidu.com/hm.js?4a7b2b2a1ee8b8686ec632c195bbd833";
+          var s = document.getElementsByTagName("script")[0]; 
+          s.parentNode.insertBefore(hm, s);
+        })();
+    </script>
+  </head>
+  
+  <body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-inverse navbar-fixed-top " role="navigation">
+      <div class="container">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+          <a class="navbar-brand " href="/" >妙音</a>
+        </div>
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse">
+            <ul class="nav navbar-nav">
+                <li><a href="/categories.html">分 类</a></li>
+                <li><a href="/fofa.html">学佛</a></li>
+                <li><a href="/tools.html">工具</a></li>
+            </ul>
+            <form class="navbar-form navbar-right" role="search" action="https://www.google.com/search" method="get">
+              <div class="input-group">
+                <input type="text" name="q" class="form-control search-query" placeholder="搜索">
+                <input type="hidden" name="ie" value="UTF-8" />
+                <input type="hidden" name="sitesearch" value="www.zhulinjingshe.cn" />
+              </div>
+            </form>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Page Content -->
+    <div class="container">
+      <div class="content">
+          <div class="row">
+            <!-- Blog Post -->
+<!-- Title -->
+<h2>
+  基于python的jQuery File Upload简单示例
+  <div class="post-date">
+        妙音 posted @
+        <span class="glyphicon glyphicon-time"></span>
+        2015-03-27 13:36
+        in jquery with tags flask插件
+  </div>
+</h2>
+<!-- Author -->
+<hr>
+
+<div class="col-md-10">
+    <p>找到个很不错的文件上传插件jQuery File Upload. 资料太少. 只能自己搭个环境，照着例子摸索. 奈何最简单的例子是基于php的，不熟. 自己弄了个基于python的例子.</p>
+
+<ul>
+<li>github</li>
+</ul>
+
+<div class="highlight"><pre><code class="language-bash" data-lang="bash">https://github.com/blueimp/jQuery-File-Upload</code></pre></div>
+
+<ul>
+<li>目录<br>
+使用flask做了个简单web服务器，接收上传请求. 目录结构如下</li>
+</ul>
+
+<div class="highlight"><pre><code class="language-bash" data-lang="bash">➜  flask-demo  tree
+.
+├── app.py
+├── static
+│   ├── 123.txt
+│   └── file-upload
+│       ├── angularjs.html
+│       ├── basic.html
+│       ├── basic-plus.html
+│       ├── blueimp-file-upload.jquery.json
+│       ├── bower.json
+│       ├── CONTRIBUTING.md
+│       ├── cors
+│       │   ├── postmessage.html
+│       │   └── result.html
+│       ├── css
+│       │   ├── demo.css
+│       │   ├── demo-ie8.css
+│       │   ├── jquery.fileupload.css
+│       │   ├── jquery.fileupload-noscript.css
+│       │   ├── jquery.fileupload-ui.css
+│       │   ├── jquery.fileupload-ui-noscript.css
+│       │   └── style.css
+│       ├── Gruntfile.js
+│       ├── img
+│       │   ├── loading.gif
+│       │   └── progressbar.gif
+│       ├── index.html
+│       ├── jquery-ui.html
+│       ├── js
+│       │   ├── app.js
+│       │   ├── cors
+│       │   │   ├── jquery.postmessage-transport.js
+│       │   │   └── jquery.xdr-transport.js
+│       │   ├── jquery.fileupload-angular.js
+│       │   ├── jquery.fileupload-audio.js
+│       │   ├── jquery.fileupload-image.js
+│       │   ├── jquery.fileupload-jquery-ui.js
+│       │   ├── jquery.fileupload.js
+│       │   ├── jquery.fileupload-process.js
+│       │   ├── jquery.fileupload-ui.js
+│       │   ├── jquery.fileupload-validate.js
+│       │   ├── jquery.fileupload-video.js
+│       │   ├── jquery.iframe-transport.js
+│       │   ├── jquery.min.js
+│       │   ├── main.js
+│       │   └── vendor
+│       │       └── jquery.ui.widget.js
+│       ├── package.json
+│       ├── README.md
+│       ├── server
+│       │   ├── gae-go
+│       │   │   ├── app
+│       │   │   │   └── main.go
+│       │   │   ├── app.yaml
+│       │   │   └── static
+│       │   │       ├── favicon.ico
+│       │   │       └── robots.txt
+│       │   ├── gae-python
+│       │   │   ├── app.yaml
+│       │   │   ├── main.py
+│       │   │   └── static
+│       │   │       ├── favicon.ico
+│       │   │       └── robots.txt
+│       │   ├── node
+│       │   │   ├── package.json
+│       │   │   ├── public
+│       │   │   │   └── files
+│       │   │   │       └── thumbnail
+│       │   │   ├── server.js
+│       │   │   └── tmp
+│       │   └── php
+│       │       ├── files
+│       │       ├── index.php
+│       │       └── UploadHandler.php
+│       ├── <span class="nb">test</span>
+│       │   ├── index.html
+│       │   └── test.js
+│       └── test.html
+└── templates
+    └── index.html
+
+<span class="m">23</span> directories, <span class="m">57</span> files</code></pre></div>
+
+<ul>
+<li>app.py</li>
+</ul>
+
+<div class="highlight"><pre><code class="language-python" data-lang="python"><span class="c">#encoding=utf-8</span>
+<span class="kn">from</span> <span class="nn">flask</span> <span class="kn">import</span> <span class="n">Flask</span>
+<span class="kn">from</span> <span class="nn">flask</span> <span class="kn">import</span> <span class="n">request</span>
+<span class="kn">from</span> <span class="nn">flask</span> <span class="kn">import</span> <span class="n">abort</span><span class="p">,</span> <span class="n">redirect</span><span class="p">,</span> <span class="n">url_for</span>
+<span class="kn">from</span> <span class="nn">flask</span> <span class="kn">import</span> <span class="n">render_template</span>
+<span class="kn">import</span> <span class="nn">json</span>
+
+<span class="n">app</span> <span class="o">=</span> <span class="n">Flask</span><span class="p">(</span><span class="n">__name__</span><span class="p">)</span>
+
+
+<span class="nd">@app.route</span><span class="p">(</span><span class="s">&#39;/&#39;</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">index</span><span class="p">():</span>
+    <span class="k">return</span> <span class="n">render_template</span><span class="p">(</span><span class="s">&#39;index.html&#39;</span><span class="p">)</span>
+
+
+<span class="nd">@app.route</span><span class="p">(</span><span class="s">&#39;/upload&#39;</span><span class="p">,</span> <span class="n">methods</span><span class="o">=</span><span class="p">[</span><span class="s">&#39;GET&#39;</span><span class="p">,</span> <span class="s">&#39;POST&#39;</span><span class="p">])</span>
+<span class="k">def</span> <span class="nf">upload_file</span><span class="p">():</span>
+    <span class="k">if</span> <span class="n">request</span><span class="o">.</span><span class="n">method</span> <span class="o">==</span> <span class="s">&#39;POST&#39;</span><span class="p">:</span>
+        <span class="n">f</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">files</span><span class="p">[</span><span class="s">&#39;files[]&#39;</span><span class="p">]</span>
+        <span class="n">filename</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">filename</span>
+        <span class="n">minetype</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">content_type</span>
+        <span class="n">f</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="s">&#39;static/&#39;</span> <span class="o">+</span> <span class="n">filename</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">({</span><span class="s">&quot;files&quot;</span><span class="p">:</span> <span class="p">[{</span><span class="s">&quot;name&quot;</span><span class="p">:</span> <span class="n">filename</span><span class="p">,</span> <span class="s">&quot;minetype&quot;</span><span class="p">:</span> <span class="n">minetype</span><span class="p">}]})</span>
+
+
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="n">app</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">host</span><span class="o">=</span><span class="s">&quot;0.0.0.0&quot;</span><span class="p">,</span> <span class="n">port</span><span class="o">=</span><span class="mi">7000</span><span class="p">,</span> <span class="n">debug</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span></code></pre></div>
+
+<ul>
+<li>demo.html</li>
+</ul>
+
+<div class="highlight"><pre><code class="language-html" data-lang="html"><span class="cp">&lt;!DOCTYPE HTML&gt;</span>
+<span class="nt">&lt;html&gt;</span>
+<span class="nt">&lt;head&gt;</span>
+<span class="nt">&lt;meta</span> <span class="na">charset=</span><span class="s">&quot;utf-8&quot;</span><span class="nt">&gt;</span>
+<span class="nt">&lt;title&gt;</span>jQuery File Upload 示例<span class="nt">&lt;/title&gt;</span>
+<span class="nt">&lt;/head&gt;</span>
+<span class="nt">&lt;body&gt;</span>
+<span class="nt">&lt;input</span> <span class="na">id=</span><span class="s">&quot;fileupload&quot;</span> <span class="na">type=</span><span class="s">&quot;file&quot;</span> <span class="na">name=</span><span class="s">&quot;files[]&quot;</span> <span class="na">data-url=</span><span class="s">&quot;/upload&quot;</span> <span class="na">multiple</span><span class="nt">&gt;</span>
+<span class="nt">&lt;script </span><span class="na">src=</span><span class="s">&quot;/static/file-upload/js/jquery.min.js&quot;</span><span class="nt">&gt;&lt;/script&gt;</span>
+<span class="nt">&lt;script </span><span class="na">src=</span><span class="s">&quot;/static/file-upload/js/vendor/jquery.ui.widget.js&quot;</span><span class="nt">&gt;&lt;/script&gt;</span>
+<span class="nt">&lt;script </span><span class="na">src=</span><span class="s">&quot;/static/file-upload/js/jquery.iframe-transport.js&quot;</span><span class="nt">&gt;&lt;/script&gt;</span>
+<span class="nt">&lt;script </span><span class="na">src=</span><span class="s">&quot;/static/file-upload/js/jquery.fileupload.js&quot;</span><span class="nt">&gt;&lt;/script&gt;</span>
+<span class="nt">&lt;script&gt;</span>
+<span class="nx">$</span><span class="p">(</span><span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+    <span class="nx">$</span><span class="p">(</span><span class="s1">&#39;#fileupload&#39;</span><span class="p">).</span><span class="nx">fileupload</span><span class="p">({</span>
+        <span class="nx">dataType</span><span class="o">:</span> <span class="s1">&#39;json&#39;</span><span class="p">,</span>
+        <span class="nx">done</span><span class="o">:</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">e</span><span class="p">,</span> <span class="nx">data</span><span class="p">)</span> <span class="p">{</span>
+            <span class="nx">$</span><span class="p">.</span><span class="nx">each</span><span class="p">(</span><span class="nx">data</span><span class="p">.</span><span class="nx">result</span><span class="p">.</span><span class="nx">files</span><span class="p">,</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">index</span><span class="p">,</span> <span class="nx">file</span><span class="p">)</span> <span class="p">{</span>
+                <span class="nx">$</span><span class="p">(</span><span class="s1">&#39;&lt;p/&gt;&#39;</span><span class="p">).</span><span class="nx">text</span><span class="p">(</span><span class="nx">file</span><span class="p">.</span><span class="nx">name</span><span class="p">).</span><span class="nx">appendTo</span><span class="p">(</span><span class="nb">document</span><span class="p">.</span><span class="nx">body</span><span class="p">);</span>
+            <span class="p">});</span>
+        <span class="p">}</span>
+    <span class="p">});</span>
+<span class="p">});</span>
+<span class="nt">&lt;/script&gt;</span>
+<span class="nt">&lt;/body&gt;</span> 
+<span class="nt">&lt;/html&gt;</span></code></pre></div>
+
+<p>试了之后，确实很不错.</p>
+
+    <br/>
+    <div style="margin-top:10px;margin-bottom:10px">
+      
+      <span class="next">
+        上篇：
+        <a href="/python/2015/03/26/pillow-python.html">
+          pillow生成缩略图
+        </a>
+      </span>
+       
+      
+      <span class="prev">
+        下篇：
+        <a href="/jekyll/2015/04/02/jekyll-sitemap.html">
+          启动jekyll出现undefined method `relative_path`
+        </a>
+      </span>
+      
+    </div>
+    <hr>
+    <!-- Blog Comments -->
+    <div class="media">
+        <!-- UY BEGIN -->
+        <div id="uyan_frame"></div>
+        <script type="text/javascript" src="http://v2.uyan.cc/code/uyan.js?uid=1965284"></script>
+        <!-- UY END -->
+    </div>
+</div>
+
+          </div>
+      </div>
+      <!-- Footer -->
+      <footer>
+        <div class="row">
+          <div class="col-lg-12">
+            <p align="center"></p>
+          </div>
+        </div>
+      </footer>
+    </div>
+    <script src="/static/js/blog.js"></script>
+  </body>
+</html>
+
