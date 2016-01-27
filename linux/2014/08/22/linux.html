@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="en">
+  
+  <head>
+    <meta charset="utf-8">
+    <meta name="baidu-site-verification" content="fk7KxxZA62" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>
+      判断端口通不通的几种方法
+    </title>
+    <!--
+    <link rel="shortcut icon" type="image/x-icon" href="/static/images/favicon.ico" media="screen" />
+     -->
+    <!-- Bootstrap Core CSS -->
+    <link href="/static/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/static/bootstrap/css/bootstrap-theme.min.css" rel="stylesheet">
+    <link href="/static/css/blog.css" rel="stylesheet">
+    <link href="/static/css/pygments.css" rel="stylesheet">
+    <script src="/static/js/jquery-1.11.0.js"></script>
+    <script src="/static/bootstrap/js/bootstrap.min.js"></script>
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media
+    queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file://
+    -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js">
+      </script>
+      <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js">
+      </script>
+    <![endif]-->
+    <script>
+        var _hmt = _hmt || [];
+        (function() {
+          var hm = document.createElement("script");
+          hm.src = "//hm.baidu.com/hm.js?4a7b2b2a1ee8b8686ec632c195bbd833";
+          var s = document.getElementsByTagName("script")[0]; 
+          s.parentNode.insertBefore(hm, s);
+        })();
+    </script>
+  </head>
+  
+  <body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-inverse navbar-fixed-top " role="navigation">
+      <div class="container">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+          <a class="navbar-brand " href="/" >妙音</a>
+        </div>
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse">
+            <ul class="nav navbar-nav">
+                <li><a href="/categories.html">分 类</a></li>
+                <li><a href="/fofa.html">学佛</a></li>
+                <li><a href="/tools.html">工具</a></li>
+            </ul>
+            <form class="navbar-form navbar-right" role="search" action="https://www.google.com/search" method="get">
+              <div class="input-group">
+                <input type="text" name="q" class="form-control search-query" placeholder="搜索">
+                <input type="hidden" name="ie" value="UTF-8" />
+                <input type="hidden" name="sitesearch" value="www.zhulinjingshe.cn" />
+              </div>
+            </form>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Page Content -->
+    <div class="container">
+      <div class="content">
+          <div class="row">
+            <!-- Blog Post -->
+<!-- Title -->
+<h2>
+  判断端口通不通的几种方法
+  <div class="post-date">
+        妙音 posted @
+        <span class="glyphicon glyphicon-time"></span>
+        2014-08-22 21:05
+        in linux with tags 
+  </div>
+</h2>
+<!-- Author -->
+<hr>
+
+<div class="col-md-10">
+    <p>通常使用&quot;telnet ip port&quot;判断端口通不通. 有其它方法吗？先看下面的几种方法</p>
+
+<h2>准备环境</h2>
+
+<p>启动一个web服务器，提供端口.</p>
+
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="o">[</span>wyq@localhost ~<span class="o">]</span><span class="nv">$ </span>python -m SimpleHTTPServer 8080
+Serving HTTP on 0.0.0.0 port <span class="m">8080</span> ...</code></pre></div>
+
+<p>用其它web服务器提供端口也一样，由于python比较方便，这里就用它</p>
+
+<h2>用telnet判断</h2>
+
+<p>telnet是windows标准服务，可以直接用；如果是linux机器，需要安装telnet.</p>
+
+<p>用法: <strong>telnet ip port</strong></p>
+
+<p>先用telnet连接不存在的端口</p>
+
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="o">[</span>wyq@localhost ~<span class="o">]</span><span class="nv">$ </span>telnet localhost 9000
+Trying 127.0.0.1...
+telnet: connect to address 127.0.0.1: Connection refused</code></pre></div>
+
+<p>直接提示连接被拒绝</p>
+
+<p>再连接上面提供的端口</p>
+
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="o">[</span>wyq@localhost ~<span class="o">]</span><span class="nv">$ </span>telnet localhost 8080
+Trying 127.0.0.1...
+Connected to localhost.
+Escape character is <span class="s1">&#39;^]&#39;</span>.</code></pre></div>
+
+<p>看到&quot;Connected to localhost.&quot; 可以知道连接成功了.</p>
+
+<p>后台服务器有什么反映？</p>
+
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="o">[</span>wyq@localhost monitor<span class="o">]</span><span class="nv">$ </span>python -m SimpleHTTPServer 8080
+Serving HTTP on 0.0.0.0 port <span class="m">8080</span> ...</code></pre></div>
+
+<p>没有任何反映</p>
+
+<p>此时telnet停住了，随便输入一个字符&quot;a&quot;，然后回车</p>
+
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="o">[</span>wyq@localhost ~<span class="o">]</span><span class="nv">$ </span>telnet localhost 8080
+Trying 127.0.0.1...
+Connected to localhost.
+Escape character is <span class="s1">&#39;^]&#39;</span>.
+a
+&lt;head&gt;
+&lt;title&gt;Error response&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+&lt;h1&gt;Error response&lt;/h1&gt;
+&lt;p&gt;Error code 400.
+&lt;p&gt;Message: Bad request syntax <span class="o">(</span><span class="s1">&#39;a&#39;</span><span class="o">)</span>.
+&lt;p&gt;Error code explanation: <span class="nv">400</span> <span class="o">=</span> Bad request syntax or unsupported method.
+&lt;/body&gt;
+Connection closed by foreign host.</code></pre></div>
+
+<p>再看服务器</p>
+
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="o">[</span>wyq@localhost monitor<span class="o">]</span><span class="nv">$ </span>python -m SimpleHTTPServer 8080
+Serving HTTP on 0.0.0.0 port <span class="m">8080</span> ...
+127.0.0.1 - - <span class="o">[</span>22/Aug/2014 07:15:16<span class="o">]</span> code 400, message Bad request syntax <span class="o">(</span><span class="s1">&#39;a&#39;</span><span class="o">)</span>
+127.0.0.1 - - <span class="o">[</span>22/Aug/2014 07:15:16<span class="o">]</span> <span class="s2">&quot;a&quot;</span> <span class="m">400</span> -</code></pre></div>
+
+<p>上面是linux环境下telnet连接一个web服务端口的情况. </p>
+
+<h2>用ssh判断</h2>
+
+<p>ssh是linux的标准配置并且最常用，可以用来判断端口吗？ </p>
+
+<p>用法: <strong>ssh -v -p port username@ip</strong><br>
+-v 调试模式(会打印日志).<br>
+-p 指定端口<br>
+usernmae可以随意  </p>
+
+<p>连接不存在端口</p>
+
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="o">[</span>wyq@localhost ~<span class="o">]</span><span class="nv">$ </span>ssh -v -p <span class="m">9000</span> wyq@localhost
+OpenSSH_6.4, OpenSSL 1.0.1e-fips <span class="m">11</span> Feb 2013
+debug1: Reading configuration data /home/wyq/.ssh/config
+debug1: Reading configuration data /etc/ssh/ssh_config
+debug1: /etc/ssh/ssh_config line 51: Applying options <span class="k">for</span> *
+debug1: Connecting to localhost <span class="o">[</span>127.0.0.1<span class="o">]</span> port 9000.
+debug1: connect to address 127.0.0.1 port 9000: Connection refused
+ssh: connect to host localhost port 9000: Connection refused</code></pre></div>
+
+<p>&quot;Connection refused&quot;表示端口不可用</p>
+
+<p>连接存在的端口</p>
+
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="o">[</span>wyq@localhost ~<span class="o">]</span><span class="nv">$ </span>ssh -v -p <span class="m">8080</span> wyq@localhost
+OpenSSH_6.4, OpenSSL 1.0.1e-fips <span class="m">11</span> Feb 2013
+debug1: Reading configuration data /home/wyq/.ssh/config
+debug1: Reading configuration data /etc/ssh/ssh_config
+debug1: /etc/ssh/ssh_config line 51: Applying options <span class="k">for</span> *
+debug1: Connecting to localhost <span class="o">[</span>127.0.0.1<span class="o">]</span> port 8080.
+debug1: Connection established.
+debug1: identity file /home/wyq/.ssh/id_rsa <span class="nb">type </span>1
+debug1: identity file /home/wyq/.ssh/id_rsa-cert <span class="nb">type</span> -1
+debug1: identity file /home/wyq/.ssh/id_dsa <span class="nb">type</span> -1
+debug1: identity file /home/wyq/.ssh/id_dsa-cert <span class="nb">type</span> -1
+debug1: identity file /home/wyq/.ssh/id_ecdsa <span class="nb">type</span> -1
+debug1: identity file /home/wyq/.ssh/id_ecdsa-cert <span class="nb">type</span> -1
+debug1: Enabling compatibility mode <span class="k">for</span> protocol 2.0
+debug1: Local version string SSH-2.0-OpenSSH_6.4
+debug1: ssh_exchange_identification: &lt;head&gt;
+ 
+debug1: ssh_exchange_identification: &lt;title&gt;Error response&lt;/title&gt;
+ 
+debug1: ssh_exchange_identification: &lt;/head&gt;
+ 
+debug1: ssh_exchange_identification: &lt;body&gt;
+ 
+debug1: ssh_exchange_identification: &lt;h1&gt;Error response&lt;/h1&gt;
+ 
+debug1: ssh_exchange_identification: &lt;p&gt;Error code 400.
+ 
+debug1: ssh_exchange_identification: &lt;p&gt;Message: Bad request syntax <span class="o">(</span><span class="s1">&#39;SSH-2.0-OpenSSH_6.4&#39;</span><span class="o">)</span>.
+ 
+debug1: ssh_exchange_identification: &lt;p&gt;Error code explanation: <span class="nv">400</span> <span class="o">=</span> Bad request syntax or unsupported method.
+ 
+debug1: ssh_exchange_identification: &lt;/body&gt;
+ 
+ssh_exchange_identification: Connection closed by remote host</code></pre></div>
+
+<p>&quot;Connection established&quot; 表示已经连上端口</p>
+
+<p>服务器输出</p>
+
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="o">[</span>wyq@localhost ~<span class="o">]</span><span class="nv">$ </span>python -m SimpleHTTPServer 8080
+Serving HTTP on 0.0.0.0 port <span class="m">8080</span> ...
+127.0.0.1 - - <span class="o">[</span>22/Aug/2014 13:32:55<span class="o">]</span> code 400, message Bad request syntax <span class="o">(</span><span class="s1">&#39;SSH-2.0-OpenSSH_6.4&#39;</span><span class="o">)</span>
+127.0.0.1 - - <span class="o">[</span>22/Aug/2014 13:32:55<span class="o">]</span> <span class="s2">&quot;SSH-2.0-OpenSSH_6.4&quot;</span> <span class="m">400</span> -</code></pre></div>
+
+<h2>用wget判断</h2>
+
+<p>wget是linux下的下载工具，需要先安装.</p>
+
+<p>用法: <strong>wget ip:port</strong></p>
+
+<p>连接不存在的端口</p>
+
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="o">[</span>wyq@localhost ~<span class="o">]</span><span class="nv">$ </span>wget localhost:9000
+--2014-08-22 13:36:42--  http://localhost:9000/
+正在解析主机 localhost <span class="o">(</span>localhost<span class="o">)</span>... 127.0.0.1
+正在连接 localhost <span class="o">(</span>localhost<span class="o">)</span><span class="p">|</span>127.0.0.1<span class="p">|</span>:9000... 失败：拒绝连接。</code></pre></div>
+
+<p>连接存在的端口</p>
+
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="o">[</span>wyq@localhost ~<span class="o">]</span><span class="nv">$ </span>wget localhost:8080
+--2014-08-22 13:37:22--  http://localhost:8080/
+正在解析主机 localhost <span class="o">(</span>localhost<span class="o">)</span>... 127.0.0.1
+正在连接 localhost <span class="o">(</span>localhost<span class="o">)</span><span class="p">|</span>127.0.0.1<span class="p">|</span>:8080... 已连接。
+已发出 HTTP 请求，正在等待回应... <span class="m">200</span> OK
+长度：2770 <span class="o">(</span>2.7K<span class="o">)</span> <span class="o">[</span>text/html<span class="o">]</span>
+正在保存至: “index.html”
+ 
+100%<span class="o">[======================================</span>&gt;<span class="o">]</span> 2,770       --.-K/s 用时 0s      
+ 
+2014-08-22 13:37:22 <span class="o">(</span><span class="m">105</span> MB/s<span class="o">)</span> - 已保存 “index.html” <span class="o">[</span>2770/2770<span class="o">])</span></code></pre></div>
+
+<h2>总结</h2>
+
+<p>提供端口服务，则使用了tcp协议，上面是以web服务器为例。如果服务器是更简单的tcp服务器，三个工具同样适用.<br>
+三个工具的共同点是：1.以tcp协议为基础；2.能访问指定端口. 遵循这两点可以找到很多工具.<br>
+<strong>在windows下使用telnet比较方便，linux下个人就比较喜欢用wget.</strong></p>
+
+    <br/>
+    <div style="margin-top:10px;margin-bottom:10px">
+      
+      <span class="next">
+        上篇：
+        <a href="/angularjs/2014/08/12/angularjs.html">
+          angularjs指令名是怎么回事？
+        </a>
+      </span>
+       
+      
+      <span class="prev">
+        下篇：
+        <a href="/linux/2014/08/22/angularjs.html">
+          angularjs过滤器(number)
+        </a>
+      </span>
+      
+    </div>
+    <hr>
+    <!-- Blog Comments -->
+    <div class="media">
+        <!-- UY BEGIN -->
+        <div id="uyan_frame"></div>
+        <script type="text/javascript" src="http://v2.uyan.cc/code/uyan.js?uid=1965284"></script>
+        <!-- UY END -->
+    </div>
+</div>
+
+          </div>
+      </div>
+      <!-- Footer -->
+      <footer>
+        <div class="row">
+          <div class="col-lg-12">
+            <p align="center"></p>
+          </div>
+        </div>
+      </footer>
+    </div>
+    <script src="/static/js/blog.js"></script>
+  </body>
+</html>
+

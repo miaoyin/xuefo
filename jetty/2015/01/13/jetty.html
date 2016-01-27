@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+  
+  <head>
+    <meta charset="utf-8">
+    <meta name="baidu-site-verification" content="fk7KxxZA62" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>
+      运行jetty-maven-plugin出现Unable to load the mojo 'run' in the plugin
+    </title>
+    <!--
+    <link rel="shortcut icon" type="image/x-icon" href="/static/images/favicon.ico" media="screen" />
+     -->
+    <!-- Bootstrap Core CSS -->
+    <link href="/static/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/static/bootstrap/css/bootstrap-theme.min.css" rel="stylesheet">
+    <link href="/static/css/blog.css" rel="stylesheet">
+    <link href="/static/css/pygments.css" rel="stylesheet">
+    <script src="/static/js/jquery-1.11.0.js"></script>
+    <script src="/static/bootstrap/js/bootstrap.min.js"></script>
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media
+    queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file://
+    -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js">
+      </script>
+      <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js">
+      </script>
+    <![endif]-->
+    <script>
+        var _hmt = _hmt || [];
+        (function() {
+          var hm = document.createElement("script");
+          hm.src = "//hm.baidu.com/hm.js?4a7b2b2a1ee8b8686ec632c195bbd833";
+          var s = document.getElementsByTagName("script")[0]; 
+          s.parentNode.insertBefore(hm, s);
+        })();
+    </script>
+  </head>
+  
+  <body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-inverse navbar-fixed-top " role="navigation">
+      <div class="container">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+          <a class="navbar-brand " href="/" >妙音</a>
+        </div>
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse">
+            <ul class="nav navbar-nav">
+                <li><a href="/categories.html">分 类</a></li>
+                <li><a href="/fofa.html">学佛</a></li>
+                <li><a href="/tools.html">工具</a></li>
+            </ul>
+            <form class="navbar-form navbar-right" role="search" action="https://www.google.com/search" method="get">
+              <div class="input-group">
+                <input type="text" name="q" class="form-control search-query" placeholder="搜索">
+                <input type="hidden" name="ie" value="UTF-8" />
+                <input type="hidden" name="sitesearch" value="www.zhulinjingshe.cn" />
+              </div>
+            </form>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Page Content -->
+    <div class="container">
+      <div class="content">
+          <div class="row">
+            <!-- Blog Post -->
+<!-- Title -->
+<h2>
+  运行jetty-maven-plugin出现Unable to load the mojo 'run' in the plugin
+  <div class="post-date">
+        妙音 posted @
+        <span class="glyphicon glyphicon-time"></span>
+        2015-01-13 10:10
+        in jetty with tags 
+  </div>
+</h2>
+<!-- Author -->
+<hr>
+
+<div class="col-md-10">
+    <p>在运行jetty-maven-plugin出现错误</p>
+
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="o">[</span>ERROR<span class="o">]</span> Failed to execute goal org.eclipse.jetty:jetty-maven-plugin:9.2.6.v20141205:run <span class="o">(</span>default-cli<span class="o">)</span> on project PKPlatform_web: Execution default-cli of goal org.eclipse.jetty:jetty-maven-plugin:9.2.6.v20141205:run failed: Unable to load the mojo <span class="s1">&#39;run&#39;</span> in the plugin <span class="s1">&#39;org.eclipse.jetty:jetty-maven-plugin:9.2.6.v20141205&#39;</span> due to an API incompatibility: org.codehaus.plexus.component.repository.exception.ComponentLookupException: org/eclipse/jetty/maven/plugin/JettyRunMojo : Unsupported major.minor version 51.0
+<span class="o">[</span>ERROR<span class="o">]</span> -----------------------------------------------------
+<span class="o">[</span>ERROR<span class="o">]</span> <span class="nv">realm</span> <span class="o">=</span>    plugin&gt;org.eclipse.jetty:jetty-maven-plugin:9.2.6.v20141205
+<span class="o">[</span>ERROR<span class="o">]</span> <span class="nv">strategy</span> <span class="o">=</span> org.codehaus.plexus.classworlds.strategy.SelfFirstStrategy
+<span class="o">[</span>ERROR<span class="o">]</span> urls<span class="o">[</span>0<span class="o">]</span> <span class="o">=</span> file:/D:/DEV/mavenRepons/org/eclipse/jetty/jetty-maven-plugin/9.2.6.v20141205/jetty-maven-plugin-9.2.6.v20141205.jar
+<span class="o">[</span>ERROR<span class="o">]</span> urls<span class="o">[</span>1<span class="o">]</span> <span class="o">=</span> file:/D:/DEV/mavenRepons/org/sonatype/sisu/sisu-inject-bean/2.1.1/sisu-inject-bean-2.1.1.jar
+<span class="o">[</span>ERROR<span class="o">]</span> urls<span class="o">[</span>2<span class="o">]</span> <span class="o">=</span> file:/D:/DEV/mavenRepons/org/sonatype/sisu/sisu-guice/2.9.4/sisu-guice-2.9.4-no_aop.jar
+<span class="o">[</span>ERROR<span class="o">]</span> urls<span class="o">[</span>3<span class="o">]</span> <span class="o">=</span> file:/D:/DEV/mavenRepons/org/codehaus/plexus/plexus-utils/2.0.6/plexus-utils-2.0.6.jar
+<span class="o">[</span>ERROR<span class="o">]</span> urls<span class="o">[</span>4<span class="o">]</span> <span class="o">=</span> file:/D:/DEV/mavenRepons/org/sonatype/aether/aether-util/1.11/aether-util-1.11.jar
+<span class="o">[</span>ERROR<span class="o">]</span> urls<span class="o">[</span>5<span class="o">]</span> <span class="o">=</span> file:/D:/DEV/mavenRepons/org/codehaus/plexus/plexus-interpolation/1.14/plexus-interpolation-1.14.jar
+<span class="o">[</span>ERROR<span class="o">]</span> urls<span class="o">[</span>6<span class="o">]</span> <span class="o">=</span> file:/D:/DEV/mavenRepons/org/codehaus/plexus/plexus-component-annotations/1.5.5/plexus-component-annotations-1.5.5.jar
+<span class="o">[</span>ERROR<span class="o">]</span> urls<span class="o">[</span>7<span class="o">]</span> <span class="o">=</span> file:/D:/DEV/mavenRepons/org/sonatype/plexus/plexus-sec-dispatcher/1.3/plexus-sec-dispatcher-1.3.jar
+<span class="o">[</span>ERROR<span class="o">]</span> urls<span class="o">[</span>8<span class="o">]</span> <span class="o">=</span> file:/D:/DEV/mavenRepons/org/sonatype/plexus/plexus-cipher/1.4/plexus-cipher-1.4.jar
+<span class="o">[</span>ERROR<span class="o">]</span> urls<span class="o">[</span>9<span class="o">]</span> <span class="o">=</span> file:/D:/DEV/mavenRepons/org/apache/maven/plugin-tools/maven-plugin-tools-api/3.1/maven-plugin-tools-api-3.1.jar
+<span class="o">[</span>ERROR<span class="o">]</span> urls<span class="o">[</span>10<span class="o">]</span> <span class="o">=</span> file:/D:/DEV/mavenRepons/backport-util-concurrent/backport-util-concurrent/3.1/backport-util-concurrent-3.1.jar
+<span class="o">[</span>ERROR<span class="o">]</span> urls<span class="o">[</span>11<span class="o">]</span> <span class="o">=</span> file:/D:/DEV/mavenRepons/org/eclipse/jetty/jetty-util/9.2.6.v20141205/jetty-util-9.2.6.v20141205.jar
+<span class="o">[</span>ERROR<span class="o">]</span> urls<span class="o">[</span>12<span class="o">]</span> <span class="o">=</span> file:/D:/DEV/mavenRepons/org/eclipse/jetty/jetty-webapp/9.2.6.v20141205/jetty-webapp-9.2.6.v20141205.jar
+<span class="o">[</span>ERROR<span class="o">]</span> urls<span class="o">[</span>13<span class="o">]</span> <span class="o">=</span> file:/D:/DEV/mavenRepons/org/eclipse/jetty/jetty-xml/9.2.6.v20141205/jetty-xml-9.2.6.v20141205.jar
+<span class="o">[</span>ERROR<span class="o">]</span> urls<span class="o">[</span>14<span class="o">]</span> <span class="o">=</span> file:/D:/DEV/mavenRepons/org/eclipse/jetty/jetty-servlet/9.2.6.v20141205/jetty-servlet-9.2.6.v20141205.jar
+<span class="o">[</span>ERROR<span class="o">]</span> urls<span class="o">[</span>15<span class="o">]</span> <span class="o">=</span> file:/D:/DEV/mavenRepons/org/eclipse/jetty/jetty-quickstart/9.2.6.v20141205/jetty-quickstart-9.2.6.v20141205.jar
+<span class="o">[</span>ERROR<span class="o">]</span> urls<span class="o">[</span>16<span class="o">]</span> <span class="o">=</span> file:/D:/DEV/mavenRepons/org/eclipse/jetty/jetty-jaas/9.2.6.v20141205/jetty-jaas-9.2.6.v20141205.jar
+<span class="o">[</span>ERROR<span class="o">]</span> urls<span class="o">[</span>17<span class="o">]</span> <span class="o">=</span> file:/D:/DEV/mavenRepons/org/eclipse/jetty/jetty-security/9.2.6.v20141205/jetty-security-9.2.6.v20141205.jar
+<span class="o">[</span>ERROR<span class="o">]</span> urls<span class="o">[</span>18<span class="o">]</span> <span class="o">=</span> file:/D:/DEV/mavenRepons/org/eclipse/jetty/jetty-plus/9.2.6.v20141205/jetty-plus-9.2.6.v20141205.jar
+<span class="o">[</span>ERROR<span class="o">]</span> urls<span class="o">[</span>19<span class="o">]</span> <span class="o">=</span> file:/D:/DEV/mavenRepons/org/eclipse/jetty/jetty-jndi/9.2.6.v20141205/jetty-jndi-9.2.6.v20141205.jar
+<span class="o">[</span>ERROR<span class="o">]</span> urls<span class="o">[</span>20<span class="o">]</span> <span class="o">=</span> file:/D:/DEV/mavenRepons/org/eclipse/jetty/jetty-server/9.2.6.v20141205/jetty-server-9.2.6.v20141205.jar
+<span class="o">[</span>ERROR<span class="o">]</span> urls<span class="o">[</span>21<span class="o">]</span> <span class="o">=</span> file:/D:/DEV/mavenRepons/javax/servlet/javax.servlet-api/3.1.0/javax.servlet-api-3.1.0.jar
+<span class="o">[</span>ERROR<span class="o">]</span> urls<span class="o">[</span>22<span class="o">]</span> <span class="o">=</span> file:/D:/DEV/mavenRepons/org/eclipse/jetty/jetty-http/9.2.6.v20141205/jetty-http-9.2.6.v20141205.jar
+<span class="o">[</span>ERROR<span class="o">]</span> urls<span class="o">[</span>23<span class="o">]</span> <span class="o">=</span> file:/D:/DEV/mavenRepons/org/eclipse/jetty/jetty-io/9.2.6.v20141205/jetty-io-9.2.6.v20141205.jar
+<span class="o">[</span>ERROR<span class="o">]</span> urls<span class="o">[</span>24<span class="o">]</span> <span class="o">=</span> file:/D:/DEV/mavenRepons/org/eclipse/jetty/jetty-jmx/9.2.6.v20141205/jetty-jmx-9.2.6.v20141205.jar
+<span class="o">[</span>ERROR<span class="o">]</span> urls<span class="o">[</span>25<span class="o">]</span> <span class="o">=</span> file:/D:/DEV/mavenRepons/org/eclipse/jetty/jetty-annotations/9.2.6.v20141205/jetty-annotations-9.2.6.v20141205.jar
+<span class="o">[</span>ERROR<span class="o">]</span> urls<span class="o">[</span>26<span class="o">]</span> <span class="o">=</span> file:/D:/DEV/mavenRepons/javax/annotation/javax.annotation-api/1.2/javax.annotation-api-1.2.jar
+<span class="o">[</span>ERROR<span class="o">]</span> urls<span class="o">[</span>27<span class="o">]</span> <span class="o">=</span> file:/D:/DEV/mavenRepons/org/ow2/asm/asm/5.0.1/asm-5.0.1.jar
+<span class="o">[</span>ERROR<span class="o">]</span> urls<span class="o">[</span>28<span class="o">]</span> <span class="o">=</span> file:/D:/DEV/mavenRepons/org/ow2/asm/asm-commons/5.0.1/asm-commons-5.0.1.jar
+<span class="o">[</span>ERROR<span class="o">]</span> urls<span class="o">[</span>29<span class="o">]</span> <span class="o">=</span> file:/D:/DEV/mavenRepons/org/ow2/asm/asm-tree/5.0.1/asm-tree-5.0.1.jar
+<span class="o">[</span>ERROR<span class="o">]</span> urls<span class="o">[</span>30<span class="o">]</span> <span class="o">=</span> file:/D:/DEV/mavenRepons/org/eclipse/jetty/websocket/javax-websocket-server-impl/9.2.6.v20141205/javax-websocket-server-impl-9.2.6.v20141205.jar
+<span class="o">[</span>ERROR<span class="o">]</span> urls<span class="o">[</span>31<span class="o">]</span> <span class="o">=</span> file:/D:/DEV/mavenRepons/org/eclipse/jetty/websocket/javax-websocket-client-impl/9.2.6.v20141205/javax-websocket-client-impl-9.2.6.v20141205.jar
+<span class="o">[</span>ERROR<span class="o">]</span> urls<span class="o">[</span>32<span class="o">]</span> <span class="o">=</span> file:/D:/DEV/mavenRepons/javax/websocket/javax.websocket-api/1.0/javax.websocket-api-1.0.jar
+<span class="o">[</span>ERROR<span class="o">]</span> urls<span class="o">[</span>33<span class="o">]</span> <span class="o">=</span> file:/D:/DEV/mavenRepons/org/eclipse/jetty/websocket/websocket-server/9.2.6.v20141205/websocket-server-9.2.6.v20141205.jar
+<span class="o">[</span>ERROR<span class="o">]</span> urls<span class="o">[</span>34<span class="o">]</span> <span class="o">=</span> file:/D:/DEV/mavenRepons/org/eclipse/jetty/websocket/websocket-common/9.2.6.v20141205/websocket-common-9.2.6.v20141205.jar
+<span class="o">[</span>ERROR<span class="o">]</span> urls<span class="o">[</span>35<span class="o">]</span> <span class="o">=</span> file:/D:/DEV/mavenRepons/org/eclipse/jetty/websocket/websocket-api/9.2.6.v20141205/websocket-api-9.2.6.v20141205.jar
+<span class="o">[</span>ERROR<span class="o">]</span> urls<span class="o">[</span>36<span class="o">]</span> <span class="o">=</span> file:/D:/DEV/mavenRepons/org/eclipse/jetty/websocket/websocket-client/9.2.6.v20141205/websocket-client-9.2.6.v20141205.jar
+<span class="o">[</span>ERROR<span class="o">]</span> urls<span class="o">[</span>37<span class="o">]</span> <span class="o">=</span> file:/D:/DEV/mavenRepons/org/eclipse/jetty/websocket/websocket-servlet/9.2.6.v20141205/websocket-servlet-9.2.6.v20141205.jar
+<span class="o">[</span>ERROR<span class="o">]</span> urls<span class="o">[</span>38<span class="o">]</span> <span class="o">=</span> file:/D:/DEV/mavenRepons/org/eclipse/jetty/apache-jsp/9.2.6.v20141205/apache-jsp-9.2.6.v20141205.jar
+<span class="o">[</span>ERROR<span class="o">]</span> urls<span class="o">[</span>39<span class="o">]</span> <span class="o">=</span> file:/D:/DEV/mavenRepons/org/eclipse/jetty/toolchain/jetty-schemas/3.1.M0/jetty-schemas-3.1.M0.jar
+<span class="o">[</span>ERROR<span class="o">]</span> urls<span class="o">[</span>40<span class="o">]</span> <span class="o">=</span> file:/D:/DEV/mavenRepons/org/mortbay/jasper/apache-jsp/8.0.9.M3/apache-jsp-8.0.9.M3.jar
+<span class="o">[</span>ERROR<span class="o">]</span> urls<span class="o">[</span>41<span class="o">]</span> <span class="o">=</span> file:/D:/DEV/mavenRepons/org/mortbay/jasper/apache-el/8.0.9.M3/apache-el-8.0.9.M3.jar
+<span class="o">[</span>ERROR<span class="o">]</span> urls<span class="o">[</span>42<span class="o">]</span> <span class="o">=</span> file:/D:/DEV/mavenRepons/org/eclipse/jetty/orbit/org.eclipse.jdt.core/3.8.2.v20130121/org.eclipse.jdt.core-3.8.2.v20130121.jar
+<span class="o">[</span>ERROR<span class="o">]</span> urls<span class="o">[</span>43<span class="o">]</span> <span class="o">=</span> file:/D:/DEV/mavenRepons/org/eclipse/jetty/apache-jstl/9.2.6.v20141205/apache-jstl-9.2.6.v20141205.jar
+<span class="o">[</span>ERROR<span class="o">]</span> urls<span class="o">[</span>44<span class="o">]</span> <span class="o">=</span> file:/D:/DEV/mavenRepons/org/apache/taglibs/taglibs-standard-spec/1.2.1/taglibs-standard-spec-1.2.1.jar
+<span class="o">[</span>ERROR<span class="o">]</span> urls<span class="o">[</span>45<span class="o">]</span> <span class="o">=</span> file:/D:/DEV/mavenRepons/org/apache/taglibs/taglibs-standard-impl/1.2.1/taglibs-standard-impl-1.2.1.jar
+<span class="o">[</span>ERROR<span class="o">]</span> urls<span class="o">[</span>46<span class="o">]</span> <span class="o">=</span> file:/D:/DEV/mavenRepons/javax/transaction/javax.transaction-api/1.2/javax.transaction-api-1.2.jar
+<span class="o">[</span>ERROR<span class="o">]</span> Number of foreign imports: 1
+<span class="o">[</span>ERROR<span class="o">]</span> import: Entry<span class="o">[</span>import  from realm ClassRealm<span class="o">[</span>maven.api, parent: null<span class="o">]]</span>
+<span class="o">[</span>ERROR<span class="o">]</span> 
+<span class="o">[</span>ERROR<span class="o">]</span> -----------------------------------------------------
+<span class="o">[</span>ERROR<span class="o">]</span> -&gt; <span class="o">[</span>Help 1<span class="o">]</span>
+<span class="o">[</span>ERROR<span class="o">]</span> 
+<span class="o">[</span>ERROR<span class="o">]</span> To see the full stack trace of the errors, re-run Maven with the -e switch.
+<span class="o">[</span>ERROR<span class="o">]</span> Re-run Maven using the -X switch to <span class="nb">enable </span>full debug logging.
+<span class="o">[</span>ERROR<span class="o">]</span> 
+<span class="o">[</span>ERROR<span class="o">]</span> For more information about the errors and possible solutions, please <span class="nb">read </span>the following articles:
+<span class="o">[</span>ERROR<span class="o">]</span> <span class="o">[</span>Help 1<span class="o">]</span> http://cwiki.apache.org/confluence/display/MAVEN/PluginContainerException</code></pre></div>
+
+<p>从上面发现</p>
+
+<div class="highlight"><pre><code class="language-bash" data-lang="bash">repository.exception.ComponentLookupException: org/eclipse/jetty/maven/plugin/JettyRunMojo : Unsupported major.minor version 51.0</code></pre></div>
+
+<p>很明显是版本问题. 检查机器, jdk版本是1.6，改为1.后，重新运行，一切正常.</p>
+
+    <br/>
+    <div style="margin-top:10px;margin-bottom:10px">
+      
+      <span class="next">
+        上篇：
+        <a href="/html/2015/01/05/html.html">
+          <img>加载图片失败，怎样替换为默认图片
+        </a>
+      </span>
+       
+      
+      <span class="prev">
+        下篇：
+        <a href="/git/2015/02/14/git.html">
+          git免密码(https方式)
+        </a>
+      </span>
+      
+    </div>
+    <hr>
+    <!-- Blog Comments -->
+    <div class="media">
+        <!-- UY BEGIN -->
+        <div id="uyan_frame"></div>
+        <script type="text/javascript" src="http://v2.uyan.cc/code/uyan.js?uid=1965284"></script>
+        <!-- UY END -->
+    </div>
+</div>
+
+          </div>
+      </div>
+      <!-- Footer -->
+      <footer>
+        <div class="row">
+          <div class="col-lg-12">
+            <p align="center"></p>
+          </div>
+        </div>
+      </footer>
+    </div>
+    <script src="/static/js/blog.js"></script>
+  </body>
+</html>
+

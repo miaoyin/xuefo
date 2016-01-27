@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+  
+  <head>
+    <meta charset="utf-8">
+    <meta name="baidu-site-verification" content="fk7KxxZA62" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>
+      supervisor用法
+    </title>
+    <!--
+    <link rel="shortcut icon" type="image/x-icon" href="/static/images/favicon.ico" media="screen" />
+     -->
+    <!-- Bootstrap Core CSS -->
+    <link href="/static/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/static/bootstrap/css/bootstrap-theme.min.css" rel="stylesheet">
+    <link href="/static/css/blog.css" rel="stylesheet">
+    <link href="/static/css/pygments.css" rel="stylesheet">
+    <script src="/static/js/jquery-1.11.0.js"></script>
+    <script src="/static/bootstrap/js/bootstrap.min.js"></script>
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media
+    queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file://
+    -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js">
+      </script>
+      <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js">
+      </script>
+    <![endif]-->
+    <script>
+        var _hmt = _hmt || [];
+        (function() {
+          var hm = document.createElement("script");
+          hm.src = "//hm.baidu.com/hm.js?4a7b2b2a1ee8b8686ec632c195bbd833";
+          var s = document.getElementsByTagName("script")[0]; 
+          s.parentNode.insertBefore(hm, s);
+        })();
+    </script>
+  </head>
+  
+  <body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-inverse navbar-fixed-top " role="navigation">
+      <div class="container">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+          <a class="navbar-brand " href="/" >妙音</a>
+        </div>
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse">
+            <ul class="nav navbar-nav">
+                <li><a href="/categories.html">分 类</a></li>
+                <li><a href="/fofa.html">学佛</a></li>
+                <li><a href="/tools.html">工具</a></li>
+            </ul>
+            <form class="navbar-form navbar-right" role="search" action="https://www.google.com/search" method="get">
+              <div class="input-group">
+                <input type="text" name="q" class="form-control search-query" placeholder="搜索">
+                <input type="hidden" name="ie" value="UTF-8" />
+                <input type="hidden" name="sitesearch" value="www.zhulinjingshe.cn" />
+              </div>
+            </form>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Page Content -->
+    <div class="container">
+      <div class="content">
+          <div class="row">
+            <!-- Blog Post -->
+<!-- Title -->
+<h2>
+  supervisor用法
+  <div class="post-date">
+        妙音 posted @
+        <span class="glyphicon glyphicon-time"></span>
+        2015-07-09 17:03
+        in python with tags supervisor
+  </div>
+</h2>
+<!-- Author -->
+<hr>
+
+<div class="col-md-10">
+    <p>以什么方式运行进程？将它做成服务，再以&quot;service xxx start/stop&quot;方式运行。
+或者以&quot;nohup xxx &amp;&quot;方式运行，需要停止时，先ps获得进程id，然后kill掉.
+有什么好点的办法？supervisor正好解决这个问题。</p>
+
+<ul>
+<li>安装</li>
+</ul>
+<div class="highlight"><pre><code class="language-text" data-lang="text">sudo pip install supervisor
+</code></pre></div>
+<ul>
+<li>创建配置文件</li>
+</ul>
+<div class="highlight"><pre><code class="language-text" data-lang="text">echo_supervisord_conf &gt; /etc/supervisord.conf
+</code></pre></div>
+<ul>
+<li>取消注释</li>
+</ul>
+
+<p>打开/etc/supervisord.conf，取消下面两行注释，并修改files内容.</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text">[include]
+files = /etc/supervisor/*.ini
+</code></pre></div>
+<ul>
+<li>新建配置目录</li>
+</ul>
+
+<p>新建supervisor目录及test.ini文件</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text">➜  /etc  tree supervisor
+supervisor
+└── test.ini
+</code></pre></div>
+<ul>
+<li>配置内容</li>
+</ul>
+
+<p>test.init内容</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text">[program:test]
+command=python -m SimpleHTTPServer 8000
+directory=/home/wyq/
+</code></pre></div>
+<ul>
+<li>运行</li>
+</ul>
+
+<p>运行后，在浏览器访问8000端口</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text">supervisord 
+</code></pre></div>
+<p>调试运行，此时需要先将test.ini中directory注释掉.</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text">supervisord -d
+</code></pre></div>
+<p>supervisor也可指定配置文件</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text">supervisord -c xxxx
+</code></pre></div>
+<ul>
+<li>查看日志</li>
+</ul>
+<div class="highlight"><pre><code class="language-text" data-lang="text">tail -f supervisord.conf
+</code></pre></div>
+<ul>
+<li>查看运行状态</li>
+</ul>
+<div class="highlight"><pre><code class="language-text" data-lang="text">➜  ~  supervisorctl status
+test                             RUNNING   pid 4922, uptime 0:00:07
+</code></pre></div>
+<ul>
+<li>停止任务</li>
+</ul>
+
+<p>启动与重启参数为start/restart</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text">➜  ~  supervisorctl stop test
+test: stopped
+➜  ~  supervisorctl status   
+test                             STOPPED   Jul 09 04:32 PM
+</code></pre></div>
+<ul>
+<li>停止</li>
+</ul>
+<div class="highlight"><pre><code class="language-text" data-lang="text">supervisorctl shutdown
+</code></pre></div>
+    <br/>
+    <div style="margin-top:10px;margin-bottom:10px">
+      
+      <span class="next">
+        上篇：
+        <a href="/python/2015/07/06/entry_points.html">
+          利用setuptools的entry_point参数实现模块动态导入
+        </a>
+      </span>
+       
+      
+      <span class="prev">
+        下篇：
+        <a href="/linux/2015/07/15/yumdownloader.html">
+          如何得到yum的rpm包
+        </a>
+      </span>
+      
+    </div>
+    <hr>
+    <!-- Blog Comments -->
+    <div class="media">
+        <!-- UY BEGIN -->
+        <div id="uyan_frame"></div>
+        <script type="text/javascript" src="http://v2.uyan.cc/code/uyan.js?uid=1965284"></script>
+        <!-- UY END -->
+    </div>
+</div>
+
+          </div>
+      </div>
+      <!-- Footer -->
+      <footer>
+        <div class="row">
+          <div class="col-lg-12">
+            <p align="center"></p>
+          </div>
+        </div>
+      </footer>
+    </div>
+    <script src="/static/js/blog.js"></script>
+  </body>
+</html>
+

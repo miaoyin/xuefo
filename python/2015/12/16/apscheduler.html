@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+  
+  <head>
+    <meta charset="utf-8">
+    <meta name="baidu-site-verification" content="fk7KxxZA62" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>
+      apscheduler提示maximum错误
+    </title>
+    <!--
+    <link rel="shortcut icon" type="image/x-icon" href="/static/images/favicon.ico" media="screen" />
+     -->
+    <!-- Bootstrap Core CSS -->
+    <link href="/static/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/static/bootstrap/css/bootstrap-theme.min.css" rel="stylesheet">
+    <link href="/static/css/blog.css" rel="stylesheet">
+    <link href="/static/css/pygments.css" rel="stylesheet">
+    <script src="/static/js/jquery-1.11.0.js"></script>
+    <script src="/static/bootstrap/js/bootstrap.min.js"></script>
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media
+    queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file://
+    -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js">
+      </script>
+      <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js">
+      </script>
+    <![endif]-->
+    <script>
+        var _hmt = _hmt || [];
+        (function() {
+          var hm = document.createElement("script");
+          hm.src = "//hm.baidu.com/hm.js?4a7b2b2a1ee8b8686ec632c195bbd833";
+          var s = document.getElementsByTagName("script")[0]; 
+          s.parentNode.insertBefore(hm, s);
+        })();
+    </script>
+  </head>
+  
+  <body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-inverse navbar-fixed-top " role="navigation">
+      <div class="container">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+          <a class="navbar-brand " href="/" >妙音</a>
+        </div>
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse">
+            <ul class="nav navbar-nav">
+                <li><a href="/categories.html">分 类</a></li>
+                <li><a href="/fofa.html">学佛</a></li>
+                <li><a href="/tools.html">工具</a></li>
+            </ul>
+            <form class="navbar-form navbar-right" role="search" action="https://www.google.com/search" method="get">
+              <div class="input-group">
+                <input type="text" name="q" class="form-control search-query" placeholder="搜索">
+                <input type="hidden" name="ie" value="UTF-8" />
+                <input type="hidden" name="sitesearch" value="www.zhulinjingshe.cn" />
+              </div>
+            </form>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Page Content -->
+    <div class="container">
+      <div class="content">
+          <div class="row">
+            <!-- Blog Post -->
+<!-- Title -->
+<h2>
+  apscheduler提示maximum错误
+  <div class="post-date">
+        妙音 posted @
+        <span class="glyphicon glyphicon-time"></span>
+        2015-12-16 03:31
+        in python with tags apscheduler
+  </div>
+</h2>
+<!-- Author -->
+<hr>
+
+<div class="col-md-10">
+    <h1>起因</h1>
+
+<p>在tornado中用apscheduler实现计划任务，出现错误提示</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text">2015-12-04 19:10:22,227 - apscheduler.scheduler - WARNING - Execution of job &quot;TaskHandle.progress_job (trigger: date[2015-12-04 19:10:22 CST], next run at: 2015-12-04 19:10:22 CST)&quot; skipped: maximum number of running instances reached (1)
+</code></pre></div>
+<h1>分析</h1>
+
+<p>缺乏资料，所以根据提示，分析apscheduler源码</p>
+
+<ul>
+<li>记录异常位置</li>
+</ul>
+
+<p>在源码目录下，搜索关键字maxinum，找到记录异常的位置</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text">#apscheduler/schedulers/base.py
+if run_times:
+    try:
+        executor.submit_job(job, run_times)
+    except MaxInstancesReachedError:
+        self._logger.warning(
+            &#39;Execution of job &quot;%s&quot; skipped: maximum number of running instances reached (%d)&#39;,
+            job, job.max_instances)
+    except:
+        self._logger.exception(&#39;Error submitting job &quot;%s&quot; to executor &quot;%s&quot;&#39;, job, job.executor)
+</code></pre></div>
+<ul>
+<li>异常抛出位置</li>
+</ul>
+
+<p>继续看submit_job函数，找到异常抛出位置</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text">#apscheduler/executors/base.py
+def submit_job(self, job, run_times):
+    &quot;&quot;&quot;
+    Submits job for execution.
+
+    :param Job job: job to execute
+    :param list[datetime] run_times: list of datetimes specifying when the job should have been run
+    :raises MaxInstancesReachedError: if the maximum number of allowed instances for this job has been reached
+    &quot;&quot;&quot;
+
+    assert self._lock is not None, &#39;This executor has not been started yet&#39;
+    with self._lock:
+        if self._instances[job.id] &gt;= job.max_instances:
+            raise MaxInstancesReachedError(job)
+
+        self._do_submit_job(job, run_times)
+        self._instances[job.id] += 1
+</code></pre></div>
+<ul>
+<li>_instances变量作用</li>
+</ul>
+
+<p>在submit<em>job(提交任务)时加1，在</em>run<em>job</em>success(任务运行成功)时减1。 当self.<em>instances[job.id]大于job.max</em>instances抛出异常。
+max_instances默认值为1，它表示id相同的任务实例数。</p>
+
+<h1>解决</h1>
+
+<p>设置max_instances参数</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text">sched.add_job(child_job, max_instances=10, trigger=DateTrigger(), id=&quot;123&quot;)
+</code></pre></div>
+<h1>重现脚本</h1>
+<div class="highlight"><pre><code class="language-text" data-lang="text">import time
+import tornado.ioloop
+from apscheduler.triggers.date import DateTrigger
+from apscheduler.schedulers.tornado import TornadoScheduler
+
+sched = TornadoScheduler()
+
+def child_job():
+    print &quot;start&quot;
+    time.sleep(60)
+    print &quot;end&quot;
+
+def main_job():
+    sched.add_job(child_job, trigger=DateTrigger(), id=&quot;123&quot;)
+
+sched.add_job(main_job, &#39;interval&#39;, seconds=5)
+
+sched.start()
+tornado.ioloop.IOLoop.instance().start()
+</code></pre></div>
+<ul>
+<li>输出
+<code>
+job_id: 7279209ab6c2498698f2117bb97e18a1, instances: 0, max_instances: 1
+job_id: 123, instances: 0, max_instances: 1
+start
+job_id: 7279209ab6c2498698f2117bb97e18a1, instances: 0, max_instances: 1
+job_id: 123, instances: 1, max_instances: 1
+WARNING:apscheduler.scheduler:Execution of job &quot;child_job (trigger: date[2015-12-07 15:27:11 CST], next run at: 2015-12-07 15:27:11 CST)&quot; skipped: maximum number of running instances reached (1)
+job_id: 7279209ab6c2498698f2117bb97e18a1, instances: 0, max_instances: 1
+</code></li>
+</ul>
+
+    <br/>
+    <div style="margin-top:10px;margin-bottom:10px">
+      
+      <span class="next">
+        上篇：
+        <a href="/%E4%BA%91%E8%AE%A1%E7%AE%97/2015/11/13/vagrant.html">
+          在windows中使用vagrant
+        </a>
+      </span>
+       
+      
+    </div>
+    <hr>
+    <!-- Blog Comments -->
+    <div class="media">
+        <!-- UY BEGIN -->
+        <div id="uyan_frame"></div>
+        <script type="text/javascript" src="http://v2.uyan.cc/code/uyan.js?uid=1965284"></script>
+        <!-- UY END -->
+    </div>
+</div>
+
+          </div>
+      </div>
+      <!-- Footer -->
+      <footer>
+        <div class="row">
+          <div class="col-lg-12">
+            <p align="center"></p>
+          </div>
+        </div>
+      </footer>
+    </div>
+    <script src="/static/js/blog.js"></script>
+  </body>
+</html>
+

@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en">
+  
+  <head>
+    <meta charset="utf-8">
+    <meta name="baidu-site-verification" content="fk7KxxZA62" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>
+      在windows中使用vagrant
+    </title>
+    <!--
+    <link rel="shortcut icon" type="image/x-icon" href="/static/images/favicon.ico" media="screen" />
+     -->
+    <!-- Bootstrap Core CSS -->
+    <link href="/static/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/static/bootstrap/css/bootstrap-theme.min.css" rel="stylesheet">
+    <link href="/static/css/blog.css" rel="stylesheet">
+    <link href="/static/css/pygments.css" rel="stylesheet">
+    <script src="/static/js/jquery-1.11.0.js"></script>
+    <script src="/static/bootstrap/js/bootstrap.min.js"></script>
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media
+    queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file://
+    -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js">
+      </script>
+      <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js">
+      </script>
+    <![endif]-->
+    <script>
+        var _hmt = _hmt || [];
+        (function() {
+          var hm = document.createElement("script");
+          hm.src = "//hm.baidu.com/hm.js?4a7b2b2a1ee8b8686ec632c195bbd833";
+          var s = document.getElementsByTagName("script")[0]; 
+          s.parentNode.insertBefore(hm, s);
+        })();
+    </script>
+  </head>
+  
+  <body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-inverse navbar-fixed-top " role="navigation">
+      <div class="container">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+          <a class="navbar-brand " href="/" >妙音</a>
+        </div>
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse">
+            <ul class="nav navbar-nav">
+                <li><a href="/categories.html">分 类</a></li>
+                <li><a href="/fofa.html">学佛</a></li>
+                <li><a href="/tools.html">工具</a></li>
+            </ul>
+            <form class="navbar-form navbar-right" role="search" action="https://www.google.com/search" method="get">
+              <div class="input-group">
+                <input type="text" name="q" class="form-control search-query" placeholder="搜索">
+                <input type="hidden" name="ie" value="UTF-8" />
+                <input type="hidden" name="sitesearch" value="www.zhulinjingshe.cn" />
+              </div>
+            </form>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Page Content -->
+    <div class="container">
+      <div class="content">
+          <div class="row">
+            <!-- Blog Post -->
+<!-- Title -->
+<h2>
+  在windows中使用vagrant
+  <div class="post-date">
+        妙音 posted @
+        <span class="glyphicon glyphicon-time"></span>
+        2015-11-13 14:10
+        in 云计算 with tags vagrant
+  </div>
+</h2>
+<!-- Author -->
+<hr>
+
+<div class="col-md-10">
+    <ul>
+<li>介绍</li>
+</ul>
+
+<p>vagrant封装linux开发环境，可以统一团队成员的开发环境。封装后，可以linux/windows/mac上运行.</p>
+
+<ul>
+<li>环境</li>
+</ul>
+
+<p>以win8安装vagrant为例子。vagrant需要virtualbox提供虚拟化支持，因此先安装virtualbox。</p>
+
+<ul>
+<li>安装</li>
+</ul>
+<div class="highlight"><pre><code class="language-text" data-lang="text">https://www.vagrantup.com/downloads.html
+</code></pre></div>
+<ul>
+<li>vagrant镜像</li>
+</ul>
+
+<p>vagrant镜像下载地址</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text">http://www.vagrantbox.es/
+</code></pre></div>
+<p>以centos-7.0为例子，下载地址</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text">https://github.com/tommy-muehle/puppet-vagrant-boxes/releases/download/1.1.0/centos-7.0-x86_64.box
+</code></pre></div>
+<ul>
+<li>新建目录</li>
+</ul>
+<div class="highlight"><pre><code class="language-text" data-lang="text">D:\vagrant\centos
+</code></pre></div>
+<p>下载后的centos-7.0-x86_64.box放到此目录</p>
+
+<ul>
+<li>添加box</li>
+</ul>
+<div class="highlight"><pre><code class="language-text" data-lang="text">D:\vagrant\centos&gt;vagrant box add --name centos7 .\centos-7.0-x86_64.box
+==&gt; box: Box file was not detected as metadata. Adding it directly...
+==&gt; box: Adding box &#39;centos7&#39; (v0) for provider:
+    box: Unpacking necessary files from: file://D:/vagrant/centos/centos-7.0-x86
+_64.box
+    box: Progress: 100% (Rate: 48.1M/s, Estimated time remaining: --:--:--)
+==&gt; box: Successfully added box &#39;centos7&#39; (v0) for &#39;virtualbox&#39;!
+</code></pre></div>
+<ul>
+<li>查看box列表</li>
+</ul>
+<div class="highlight"><pre><code class="language-text" data-lang="text">D:\vagrant\centos&gt;vagrant box list
+centos7            (virtualbox, 0)
+</code></pre></div>
+<ul>
+<li>初始化工作目录</li>
+</ul>
+<div class="highlight"><pre><code class="language-text" data-lang="text">D:\vagrant\centos&gt;vagrant init centos7
+</code></pre></div>
+<ul>
+<li>启动</li>
+</ul>
+<div class="highlight"><pre><code class="language-text" data-lang="text">D:\vagrant\centos&gt;vagrant up
+Bringing machine &#39;default&#39; up with &#39;virtualbox&#39; provider...
+==&gt; default: Clearing any previously set forwarded ports...
+==&gt; default: Clearing any previously set network interfaces...
+==&gt; default: Preparing network interfaces based on configuration...
+    default: Adapter 1: nat
+==&gt; default: Forwarding ports...
+    default: 22 =&gt; 2222 (adapter 1)
+==&gt; default: Booting VM...
+==&gt; default: Waiting for machine to boot. This may take a few minutes...
+    default: SSH address: 127.0.0.1:2222
+    default: SSH username: vagrant
+    default: SSH auth method: private key
+    default: Warning: Connection timeout. Retrying...
+==&gt; default: Machine booted and ready!
+==&gt; default: Checking for guest additions in VM...
+==&gt; default: Mounting shared folders...
+    default: /vagrant =&gt; D:/vagrant/centos
+==&gt; default: Machine already provisioned. Run `vagrant provision` or use the `--
+provision`
+==&gt; default: flag to force provisioning. Provisioners marked to run always will
+still run.
+</code></pre></div>
+<ul>
+<li>安装ssh工具</li>
+</ul>
+
+<p>启动之后，登录系统需要ssh，windows没有ssh，可以安装copssh。安装后，再将ssh.exe路径配置到环境变量中。</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text">https://www.itefix.net/content/copssh-free-edition
+</code></pre></div>
+<ul>
+<li>登录</li>
+</ul>
+<div class="highlight"><pre><code class="language-text" data-lang="text">D:\vagrant\centos&gt;vagrant ssh
+cygwin warning:
+  MS-DOS style path detected: D:/vagrant/centos/.vagrant/machines/default/virtua
+lbox/private_key
+  Preferred POSIX equivalent is: /cygdrive/d/vagrant/centos/.vagrant/machines/de
+fault/virtualbox/private_key
+  CYGWIN environment variable option &quot;nodosfilewarning&quot; turns off this warning.
+  Consult the user&#39;s guide for more details about POSIX paths:
+    http://cygwin.com/cygwin-ug-net/using.html#using-pathnames
+Last login: Thu Nov  5 03:10:24 2015 from 10.0.2.2
+Welcome to your Vagrant-built virtual machine.
+[vagrant@localhost ~]$ exit
+</code></pre></div>
+<p>使用其它工具登录，初始账号是vagrant/vagrant</p>
+
+<ul>
+<li>关闭</li>
+</ul>
+<div class="highlight"><pre><code class="language-text" data-lang="text">D:\vagrant\centos&gt;vagrant halt
+==&gt; default: Attempting graceful shutdown of VM...
+</code></pre></div>
+<ul>
+<li>vagrant命令</li>
+</ul>
+<div class="highlight"><pre><code class="language-text" data-lang="text">vagrant up  启动
+vagrant halt 普通关闭
+vagrant ssh 连接
+vagrant suspend 休眠
+vagrant reload  重启
+vagrant destroy 删除
+vagrant box add --name box_name /path/of/box/file #添加本地box
+</code></pre></div>
+    <br/>
+    <div style="margin-top:10px;margin-bottom:10px">
+      
+      <span class="next">
+        上篇：
+        <a href="/python/2015/11/13/paramiko.html">
+          python paramiko实现ssh远程登录
+        </a>
+      </span>
+       
+      
+      <span class="prev">
+        下篇：
+        <a href="/python/2015/12/16/apscheduler.html">
+          apscheduler提示maximum错误
+        </a>
+      </span>
+      
+    </div>
+    <hr>
+    <!-- Blog Comments -->
+    <div class="media">
+        <!-- UY BEGIN -->
+        <div id="uyan_frame"></div>
+        <script type="text/javascript" src="http://v2.uyan.cc/code/uyan.js?uid=1965284"></script>
+        <!-- UY END -->
+    </div>
+</div>
+
+          </div>
+      </div>
+      <!-- Footer -->
+      <footer>
+        <div class="row">
+          <div class="col-lg-12">
+            <p align="center"></p>
+          </div>
+        </div>
+      </footer>
+    </div>
+    <script src="/static/js/blog.js"></script>
+  </body>
+</html>
+

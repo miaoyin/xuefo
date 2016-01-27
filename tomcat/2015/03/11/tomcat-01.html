@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+  
+  <head>
+    <meta charset="utf-8">
+    <meta name="baidu-site-verification" content="fk7KxxZA62" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>
+      debian中设置tomcat开机启动
+    </title>
+    <!--
+    <link rel="shortcut icon" type="image/x-icon" href="/static/images/favicon.ico" media="screen" />
+     -->
+    <!-- Bootstrap Core CSS -->
+    <link href="/static/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/static/bootstrap/css/bootstrap-theme.min.css" rel="stylesheet">
+    <link href="/static/css/blog.css" rel="stylesheet">
+    <link href="/static/css/pygments.css" rel="stylesheet">
+    <script src="/static/js/jquery-1.11.0.js"></script>
+    <script src="/static/bootstrap/js/bootstrap.min.js"></script>
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media
+    queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file://
+    -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js">
+      </script>
+      <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js">
+      </script>
+    <![endif]-->
+    <script>
+        var _hmt = _hmt || [];
+        (function() {
+          var hm = document.createElement("script");
+          hm.src = "//hm.baidu.com/hm.js?4a7b2b2a1ee8b8686ec632c195bbd833";
+          var s = document.getElementsByTagName("script")[0]; 
+          s.parentNode.insertBefore(hm, s);
+        })();
+    </script>
+  </head>
+  
+  <body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-inverse navbar-fixed-top " role="navigation">
+      <div class="container">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+          <a class="navbar-brand " href="/" >妙音</a>
+        </div>
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse">
+            <ul class="nav navbar-nav">
+                <li><a href="/categories.html">分 类</a></li>
+                <li><a href="/fofa.html">学佛</a></li>
+                <li><a href="/tools.html">工具</a></li>
+            </ul>
+            <form class="navbar-form navbar-right" role="search" action="https://www.google.com/search" method="get">
+              <div class="input-group">
+                <input type="text" name="q" class="form-control search-query" placeholder="搜索">
+                <input type="hidden" name="ie" value="UTF-8" />
+                <input type="hidden" name="sitesearch" value="www.zhulinjingshe.cn" />
+              </div>
+            </form>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Page Content -->
+    <div class="container">
+      <div class="content">
+          <div class="row">
+            <!-- Blog Post -->
+<!-- Title -->
+<h2>
+  debian中设置tomcat开机启动
+  <div class="post-date">
+        妙音 posted @
+        <span class="glyphicon glyphicon-time"></span>
+        2015-03-11 16:50
+        in tomcat with tags 
+  </div>
+</h2>
+<!-- Author -->
+<hr>
+
+<div class="col-md-10">
+    <ul>
+<li>解压<br>
+在tomcat的bin目录下有commons-daemon-native.tar.gz文件</li>
+</ul>
+
+<div class="highlight"><pre><code class="language-text" data-lang="text">➜  bin  tar -zxvf commons-daemon-native.tar.gz</code></pre></div>
+
+<ul>
+<li>编译</li>
+</ul>
+
+<div class="highlight"><pre><code class="language-text" data-lang="text">➜  unix  ./configure 
+...
+➜  unix  make</code></pre></div>
+
+<ul>
+<li>复制到bin目录<br>
+编译后生成jsvc文件，复制到bin目录下</li>
+</ul>
+
+<div class="highlight"><pre><code class="language-text" data-lang="text">cp jsvc /home/wyq/software/apache-tomcat-7.0.59/bin/</code></pre></div>
+
+<ul>
+<li>设置启动用户<br>
+打开daemon.sh文件，默认用户是tomcat，可以自己更改</li>
+</ul>
+
+<div class="highlight"><pre><code class="language-text" data-lang="text">TOMCAT_USER=wyq</code></pre></div>
+
+<ul>
+<li>启动/停止</li>
+</ul>
+
+<div class="highlight"><pre><code class="language-text" data-lang="text">sh daemon.sh start/stop</code></pre></div>
+
+<ul>
+<li>修改daemon.sh配置<br>
+在daemon.sh文件中添加以下配置</li>
+</ul>
+
+<div class="highlight"><pre><code class="language-text" data-lang="text">pkenv=/home/wyq/pkenv
+JAVA_HOME=$pkenv/jdk1.7.0_75
+CATALINA_HOME=$pkenv/apache-tomcat-7.0.59
+CATALINA_BASE=$pkenv/apache-tomcat-7.0.59
+DAEMON_HOME=$pkenv/apache-tomcat-7.0.59/bin
+TOMCAT_USER=wyq</code></pre></div>
+
+<ul>
+<li>添加到/etc/init.d</li>
+</ul>
+
+<div class="highlight"><pre><code class="language-text" data-lang="text">cd /etc/init.d
+ln -s xxxx/bin/daemon.sh tomcat</code></pre></div>
+
+<ul>
+<li>以service方式启动/停止</li>
+</ul>
+
+<div class="highlight"><pre><code class="language-text" data-lang="text">sudo service tomcat start/stop</code></pre></div>
+
+<p>重启机器，tomcat会跟随系统启动.</p>
+
+    <br/>
+    <div style="margin-top:10px;margin-bottom:10px">
+      
+      <span class="next">
+        上篇：
+        <a href="/tomcat/2015/03/11/tomcat.html">
+          一台机器部署多个tomcat
+        </a>
+      </span>
+       
+      
+      <span class="prev">
+        下篇：
+        <a href="/mysql/2015/03/12/mysql-01.html">
+          查看mysql最大连接数
+        </a>
+      </span>
+      
+    </div>
+    <hr>
+    <!-- Blog Comments -->
+    <div class="media">
+        <!-- UY BEGIN -->
+        <div id="uyan_frame"></div>
+        <script type="text/javascript" src="http://v2.uyan.cc/code/uyan.js?uid=1965284"></script>
+        <!-- UY END -->
+    </div>
+</div>
+
+          </div>
+      </div>
+      <!-- Footer -->
+      <footer>
+        <div class="row">
+          <div class="col-lg-12">
+            <p align="center"></p>
+          </div>
+        </div>
+      </footer>
+    </div>
+    <script src="/static/js/blog.js"></script>
+  </body>
+</html>
+

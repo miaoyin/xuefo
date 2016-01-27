@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+  
+  <head>
+    <meta charset="utf-8">
+    <meta name="baidu-site-verification" content="fk7KxxZA62" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>
+      gettext国际化用法示例
+    </title>
+    <!--
+    <link rel="shortcut icon" type="image/x-icon" href="/static/images/favicon.ico" media="screen" />
+     -->
+    <!-- Bootstrap Core CSS -->
+    <link href="/static/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/static/bootstrap/css/bootstrap-theme.min.css" rel="stylesheet">
+    <link href="/static/css/blog.css" rel="stylesheet">
+    <link href="/static/css/pygments.css" rel="stylesheet">
+    <script src="/static/js/jquery-1.11.0.js"></script>
+    <script src="/static/bootstrap/js/bootstrap.min.js"></script>
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media
+    queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file://
+    -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js">
+      </script>
+      <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js">
+      </script>
+    <![endif]-->
+    <script>
+        var _hmt = _hmt || [];
+        (function() {
+          var hm = document.createElement("script");
+          hm.src = "//hm.baidu.com/hm.js?4a7b2b2a1ee8b8686ec632c195bbd833";
+          var s = document.getElementsByTagName("script")[0]; 
+          s.parentNode.insertBefore(hm, s);
+        })();
+    </script>
+  </head>
+  
+  <body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-inverse navbar-fixed-top " role="navigation">
+      <div class="container">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+          <a class="navbar-brand " href="/" >妙音</a>
+        </div>
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse">
+            <ul class="nav navbar-nav">
+                <li><a href="/categories.html">分 类</a></li>
+                <li><a href="/fofa.html">学佛</a></li>
+                <li><a href="/tools.html">工具</a></li>
+            </ul>
+            <form class="navbar-form navbar-right" role="search" action="https://www.google.com/search" method="get">
+              <div class="input-group">
+                <input type="text" name="q" class="form-control search-query" placeholder="搜索">
+                <input type="hidden" name="ie" value="UTF-8" />
+                <input type="hidden" name="sitesearch" value="www.zhulinjingshe.cn" />
+              </div>
+            </form>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Page Content -->
+    <div class="container">
+      <div class="content">
+          <div class="row">
+            <!-- Blog Post -->
+<!-- Title -->
+<h2>
+  gettext国际化用法示例
+  <div class="post-date">
+        妙音 posted @
+        <span class="glyphicon glyphicon-time"></span>
+        2015-09-09 16:15
+        in python with tags 国际化
+  </div>
+</h2>
+<!-- Author -->
+<hr>
+
+<div class="col-md-10">
+    <ul>
+<li>安装gettext</li>
+</ul>
+<div class="highlight"><pre><code class="language-text" data-lang="text">sudo yum install gettext
+</code></pre></div>
+<ul>
+<li>gettext工具</li>
+</ul>
+
+<p>gettext: 进行translate。</p>
+
+<p>xgettext: 从程序中抽取调用gettext进行本地化的字符串，生成一份.po结尾的配置文件。</p>
+
+<p>msgfmt: 将配置好的本地化配置文件进行转换成gettext使用的格式。</p>
+
+<ul>
+<li>准备demo.py</li>
+</ul>
+<div class="highlight"><pre><code class="language-text" data-lang="text">#encoding=utf-8
+import gettext
+
+# demo对应mo文件名，locale为locale目录地址，zh_CN为locale目录下目录名
+zh = gettext.translation(&quot;demo&quot;, &quot;locale&quot;, languages=[&quot;zh_CN&quot;])
+# 激活_()
+zh.install(True)
+print _(&quot;hello world&quot;)
+</code></pre></div>
+<ul>
+<li>生成po文件</li>
+</ul>
+
+<p>从程序文件中抽取，使用gettext的字符串，生成po文件</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text">xgettext -L python -o zh_CN.po demo.py
+</code></pre></div>
+<ul>
+<li>编辑po文件</li>
+</ul>
+<div class="highlight"><pre><code class="language-text" data-lang="text">...
+#修改编码为utf-8
+&quot;Content-Type: text/plain; charset=utf-8\n&quot;
+...
+
+#加上翻译
+#: demo.py:6
+msgid &quot;hello world&quot;
+msgstr &quot;你好，世界&quot;
+</code></pre></div>
+<ul>
+<li>创建locale目录</li>
+</ul>
+<div class="highlight"><pre><code class="language-text" data-lang="text">mkdir -p locale/zh_CN/LC_MESSAGES
+</code></pre></div>
+<ul>
+<li>编译po文件</li>
+</ul>
+<div class="highlight"><pre><code class="language-text" data-lang="text">msgfmt -o ~/locale/zh_CN/LC_MESSAGES/demo.mo zh_CN.po
+</code></pre></div>
+<ul>
+<li>查看结果</li>
+</ul>
+<div class="highlight"><pre><code class="language-text" data-lang="text">➜  ~  python demo.py
+你好，世界
+</code></pre></div>
+    <br/>
+    <div style="margin-top:10px;margin-bottom:10px">
+      
+      <span class="next">
+        上篇：
+        <a href="/django/2015/07/22/login_required.html">
+          django-restful请求的访问限制
+        </a>
+      </span>
+       
+      
+      <span class="prev">
+        下篇：
+        <a href="/calamri/2015/11/04/calamri-denied.html">
+          calmari日志提示OperationalError Permission denied
+        </a>
+      </span>
+      
+    </div>
+    <hr>
+    <!-- Blog Comments -->
+    <div class="media">
+        <!-- UY BEGIN -->
+        <div id="uyan_frame"></div>
+        <script type="text/javascript" src="http://v2.uyan.cc/code/uyan.js?uid=1965284"></script>
+        <!-- UY END -->
+    </div>
+</div>
+
+          </div>
+      </div>
+      <!-- Footer -->
+      <footer>
+        <div class="row">
+          <div class="col-lg-12">
+            <p align="center"></p>
+          </div>
+        </div>
+      </footer>
+    </div>
+    <script src="/static/js/blog.js"></script>
+  </body>
+</html>
+

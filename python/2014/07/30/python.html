@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+  
+  <head>
+    <meta charset="utf-8">
+    <meta name="baidu-site-verification" content="fk7KxxZA62" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>
+      mkstemp、mktemp、TemporaryFile区别
+    </title>
+    <!--
+    <link rel="shortcut icon" type="image/x-icon" href="/static/images/favicon.ico" media="screen" />
+     -->
+    <!-- Bootstrap Core CSS -->
+    <link href="/static/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/static/bootstrap/css/bootstrap-theme.min.css" rel="stylesheet">
+    <link href="/static/css/blog.css" rel="stylesheet">
+    <link href="/static/css/pygments.css" rel="stylesheet">
+    <script src="/static/js/jquery-1.11.0.js"></script>
+    <script src="/static/bootstrap/js/bootstrap.min.js"></script>
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media
+    queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file://
+    -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js">
+      </script>
+      <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js">
+      </script>
+    <![endif]-->
+    <script>
+        var _hmt = _hmt || [];
+        (function() {
+          var hm = document.createElement("script");
+          hm.src = "//hm.baidu.com/hm.js?4a7b2b2a1ee8b8686ec632c195bbd833";
+          var s = document.getElementsByTagName("script")[0]; 
+          s.parentNode.insertBefore(hm, s);
+        })();
+    </script>
+  </head>
+  
+  <body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-inverse navbar-fixed-top " role="navigation">
+      <div class="container">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+          <a class="navbar-brand " href="/" >妙音</a>
+        </div>
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse">
+            <ul class="nav navbar-nav">
+                <li><a href="/categories.html">分 类</a></li>
+                <li><a href="/fofa.html">学佛</a></li>
+                <li><a href="/tools.html">工具</a></li>
+            </ul>
+            <form class="navbar-form navbar-right" role="search" action="https://www.google.com/search" method="get">
+              <div class="input-group">
+                <input type="text" name="q" class="form-control search-query" placeholder="搜索">
+                <input type="hidden" name="ie" value="UTF-8" />
+                <input type="hidden" name="sitesearch" value="www.zhulinjingshe.cn" />
+              </div>
+            </form>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Page Content -->
+    <div class="container">
+      <div class="content">
+          <div class="row">
+            <!-- Blog Post -->
+<!-- Title -->
+<h2>
+  mkstemp、mktemp、TemporaryFile区别
+  <div class="post-date">
+        妙音 posted @
+        <span class="glyphicon glyphicon-time"></span>
+        2014-07-30 13:07
+        in python with tags 
+  </div>
+</h2>
+<!-- Author -->
+<hr>
+
+<div class="col-md-10">
+    <h2>MKSTEMP</h2>
+
+<p>fd, name = tempfile.mkstemp 创建临时文件，并且将文件打开  </p>
+
+<div class="highlight"><pre><code class="language-python" data-lang="python"><span class="o">&gt;&gt;&gt;</span> <span class="kn">import</span> <span class="nn">tempfile</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">tempfile</span><span class="o">.</span><span class="n">mkstemp</span><span class="p">()</span>
+<span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="s">&#39;/tmp/tmpkgWSR1&#39;</span><span class="p">)</span></code></pre></div>
+
+<p>查看/tmp目录，看到已经生成真实的文件  </p>
+
+<p>lsof查询打开的临时文件  </p>
+
+<div class="highlight"><pre><code class="language-python" data-lang="python"><span class="p">[</span><span class="n">wyq</span><span class="nd">@localhost</span> <span class="n">tmp</span><span class="p">]</span><span class="err">$</span> <span class="n">lsof</span><span class="o">|</span><span class="n">grep</span> <span class="n">tmp</span><span class="o">|</span><span class="n">grep</span> <span class="n">python</span>
+<span class="n">python</span>    <span class="mi">8095</span>           <span class="n">wyq</span>    <span class="mi">3</span><span class="n">u</span>      <span class="n">REG</span>               <span class="mi">0</span><span class="p">,</span><span class="mi">33</span>         <span class="mi">0</span>     <span class="mi">254593</span> <span class="o">/</span><span class="n">tmp</span><span class="o">/</span><span class="n">tmpkgWSR1</span></code></pre></div>
+
+<p>发现mkstemp不仅创建文件，而且将文件打开. 使用mkstemp很容易忘了这点，最终造成<strong>OSError: [Errno 24] Too many open files错误</strong>.<br>
+mkstemp返回的是文件描述和文件路径，并不常用，常用的是下面两个.  </p>
+
+<h2>MKTEMP</h2>
+
+<p>name = tempfile.mktemp 返回<strong>一个临时文件的路径，但不创建该临时文件</strong></p>
+
+<div class="highlight"><pre><code class="language-python" data-lang="python"><span class="o">&gt;&gt;&gt;</span> <span class="kn">import</span> <span class="nn">tempfile</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">tempfile</span><span class="o">.</span><span class="n">mktemp</span><span class="p">()</span>
+<span class="s">&#39;/tmp/tmpPVidBM&#39;</span></code></pre></div>
+
+<p>仅仅生成临时文件名</p>
+
+<h2>TEMPORARYFILE</h2>
+
+<p>tempfile.TemporaryFile 返回文件对象(file-like)用于临时数据保存。<strong>当文件对象被close或者被del的时候，临时文件将从磁盘上删除</strong></p>
+
+<div class="highlight"><pre><code class="language-python" data-lang="python"><span class="kn">import</span> <span class="nn">time</span>
+<span class="k">with</span> <span class="n">tempfile</span><span class="o">.</span><span class="n">TemporaryFile</span><span class="p">(</span><span class="n">mode</span><span class="o">=</span><span class="s">&#39;w+r&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+    <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s">&quot;=============&quot;</span><span class="p">)</span>
+    <span class="n">f</span><span class="o">.</span><span class="n">seek</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+    <span class="k">print</span> <span class="n">f</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+    <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span></code></pre></div>
+
+<p>TemporaryFile并未在/tmp目录中创建临时文件，应该只存在与内存中.</p>
+
+    <br/>
+    <div style="margin-top:10px;margin-bottom:10px">
+      
+      <span class="next">
+        上篇：
+        <a href="/angularjs/2014/07/30/angularjs.html">
+          理解指令的restrict属性
+        </a>
+      </span>
+       
+      
+      <span class="prev">
+        下篇：
+        <a href="/%E5%85%B6%E5%AE%83/2014/08/03/qita.html">
+          你以为你在合群，其实你在浪费青春[转]
+        </a>
+      </span>
+      
+    </div>
+    <hr>
+    <!-- Blog Comments -->
+    <div class="media">
+        <!-- UY BEGIN -->
+        <div id="uyan_frame"></div>
+        <script type="text/javascript" src="http://v2.uyan.cc/code/uyan.js?uid=1965284"></script>
+        <!-- UY END -->
+    </div>
+</div>
+
+          </div>
+      </div>
+      <!-- Footer -->
+      <footer>
+        <div class="row">
+          <div class="col-lg-12">
+            <p align="center"></p>
+          </div>
+        </div>
+      </footer>
+    </div>
+    <script src="/static/js/blog.js"></script>
+  </body>
+</html>
+

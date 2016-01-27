@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+  
+  <head>
+    <meta charset="utf-8">
+    <meta name="baidu-site-verification" content="fk7KxxZA62" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>
+      在用proxychains时, ping用不了怎么办
+    </title>
+    <!--
+    <link rel="shortcut icon" type="image/x-icon" href="/static/images/favicon.ico" media="screen" />
+     -->
+    <!-- Bootstrap Core CSS -->
+    <link href="/static/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/static/bootstrap/css/bootstrap-theme.min.css" rel="stylesheet">
+    <link href="/static/css/blog.css" rel="stylesheet">
+    <link href="/static/css/pygments.css" rel="stylesheet">
+    <script src="/static/js/jquery-1.11.0.js"></script>
+    <script src="/static/bootstrap/js/bootstrap.min.js"></script>
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media
+    queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file://
+    -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js">
+      </script>
+      <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js">
+      </script>
+    <![endif]-->
+    <script>
+        var _hmt = _hmt || [];
+        (function() {
+          var hm = document.createElement("script");
+          hm.src = "//hm.baidu.com/hm.js?4a7b2b2a1ee8b8686ec632c195bbd833";
+          var s = document.getElementsByTagName("script")[0]; 
+          s.parentNode.insertBefore(hm, s);
+        })();
+    </script>
+  </head>
+  
+  <body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-inverse navbar-fixed-top " role="navigation">
+      <div class="container">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+          <a class="navbar-brand " href="/" >妙音</a>
+        </div>
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse">
+            <ul class="nav navbar-nav">
+                <li><a href="/categories.html">分 类</a></li>
+                <li><a href="/fofa.html">学佛</a></li>
+                <li><a href="/tools.html">工具</a></li>
+            </ul>
+            <form class="navbar-form navbar-right" role="search" action="https://www.google.com/search" method="get">
+              <div class="input-group">
+                <input type="text" name="q" class="form-control search-query" placeholder="搜索">
+                <input type="hidden" name="ie" value="UTF-8" />
+                <input type="hidden" name="sitesearch" value="www.zhulinjingshe.cn" />
+              </div>
+            </form>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Page Content -->
+    <div class="container">
+      <div class="content">
+          <div class="row">
+            <!-- Blog Post -->
+<!-- Title -->
+<h2>
+  在用proxychains时, ping用不了怎么办
+  <div class="post-date">
+        妙音 posted @
+        <span class="glyphicon glyphicon-time"></span>
+        2014-01-16 10:49
+        in linux with tags proxychains
+  </div>
+</h2>
+<!-- Author -->
+<hr>
+
+<div class="col-md-10">
+    <p>一般用ping来测试网络是否连通. 在用proxychains代理时，发现ping用不了</p>
+
+<div class="highlight"><pre><code class="language-python" data-lang="python"><span class="lineno">1</span> <span class="p">[</span><span class="n">wyq</span><span class="nd">@localhost</span> <span class="o">~</span><span class="p">]</span><span class="err">$</span> <span class="n">proxychains</span> <span class="n">ping</span> <span class="mf">135.32</span><span class="o">.</span><span class="mf">9.98</span>
+<span class="lineno">2</span> <span class="n">ProxyChains</span><span class="o">-</span><span class="mf">3.1</span> <span class="p">(</span><span class="n">http</span><span class="p">:</span><span class="o">//</span><span class="n">proxychains</span><span class="o">.</span><span class="n">sf</span><span class="o">.</span><span class="n">net</span><span class="p">)</span>
+<span class="lineno">3</span> <span class="n">ERROR</span><span class="p">:</span> <span class="n">ld</span><span class="o">.</span><span class="n">so</span><span class="p">:</span> <span class="nb">object</span> <span class="s">&#39;libproxychains.so.3&#39;</span> <span class="kn">from</span> <span class="nn">LD_PRELOAD</span> <span class="nn">cannot</span> <span class="nn">be</span> <span class="nn">preloaded</span><span class="p">:</span> <span class="n">ignored</span><span class="o">.</span>
+<span class="lineno">4</span> <span class="n">PING</span> <span class="mf">135.32</span><span class="o">.</span><span class="mf">9.98</span> <span class="p">(</span><span class="mf">135.32</span><span class="o">.</span><span class="mf">9.98</span><span class="p">)</span> <span class="mi">56</span><span class="p">(</span><span class="mi">84</span><span class="p">)</span> <span class="nb">bytes</span> <span class="n">of</span> <span class="n">data</span><span class="o">.</span></code></pre></div>
+
+<p>proxychains支持的是socks，http, https协议.它们以tcp或者udp协议为基础. 所以proxychains只支持使用tcp或udp协议的程序. ping用的是ICMP协议，不以tcp或udp为基础，所以用不了。</p>
+
+<p>有其它办法吗？
+以tcp或udp为基础，测试网络是否可用的工具，比较好用的有wget</p>
+
+<div class="highlight"><pre><code class="language-python" data-lang="python"><span class="lineno">1</span> <span class="p">[</span><span class="n">wyq</span><span class="nd">@localhost</span> <span class="o">~</span><span class="p">]</span><span class="err">$</span> <span class="n">proxychains</span> <span class="n">wget</span> <span class="mf">135.32</span><span class="o">.</span><span class="mf">9.98</span>
+<span class="lineno">2</span> <span class="n">ProxyChains</span><span class="o">-</span><span class="mf">3.1</span> <span class="p">(</span><span class="n">http</span><span class="p">:</span><span class="o">//</span><span class="n">proxychains</span><span class="o">.</span><span class="n">sf</span><span class="o">.</span><span class="n">net</span><span class="p">)</span>
+<span class="lineno">3</span> <span class="o">--</span><span class="mi">2014</span><span class="o">-</span><span class="mo">01</span><span class="o">-</span><span class="mi">16</span> <span class="mi">09</span><span class="p">:</span><span class="mi">44</span><span class="p">:</span><span class="mi">57</span><span class="o">--</span>  <span class="n">http</span><span class="p">:</span><span class="o">//</span><span class="mf">135.32</span><span class="o">.</span><span class="mf">9.98</span><span class="o">/</span>
+<span class="lineno">4</span> <span class="err">正在连接</span> <span class="mf">135.32</span><span class="o">.</span><span class="mf">9.98</span><span class="p">:</span><span class="mf">80.</span><span class="o">..</span> <span class="o">|</span><span class="n">S</span><span class="o">-</span><span class="n">chain</span><span class="o">|-&lt;&gt;-</span><span class="mf">192.168</span><span class="o">.</span><span class="mf">1.115</span><span class="p">:</span><span class="mi">1080</span><span class="o">-&lt;&gt;&lt;&gt;-</span><span class="mf">135.32</span><span class="o">.</span><span class="mf">9.98</span><span class="p">:</span><span class="mi">80</span><span class="o">-&lt;--</span><span class="n">denied</span>
+<span class="lineno">5</span> <span class="err">失败：拒绝连接。</span></code></pre></div>
+
+<p>虽然提示拒绝连接，但是输出信息，已能说明网络连通了.</p>
+
+<p>wget本身简单易用，在这种情况下，用来测试网络是否可用，还是比较适合的。</p>
+
+    <br/>
+    <div style="margin-top:10px;margin-bottom:10px">
+      
+      <span class="next">
+        上篇：
+        <a href="/linux/2014/01/15/linux.html">
+          内网到外网的隧道
+        </a>
+      </span>
+       
+      
+      <span class="prev">
+        下篇：
+        <a href="/coding/2014/01/17/coding.html">
+          什么是异常，其实我也不是很清楚
+        </a>
+      </span>
+      
+    </div>
+    <hr>
+    <!-- Blog Comments -->
+    <div class="media">
+        <!-- UY BEGIN -->
+        <div id="uyan_frame"></div>
+        <script type="text/javascript" src="http://v2.uyan.cc/code/uyan.js?uid=1965284"></script>
+        <!-- UY END -->
+    </div>
+</div>
+
+          </div>
+      </div>
+      <!-- Footer -->
+      <footer>
+        <div class="row">
+          <div class="col-lg-12">
+            <p align="center"></p>
+          </div>
+        </div>
+      </footer>
+    </div>
+    <script src="/static/js/blog.js"></script>
+  </body>
+</html>
+

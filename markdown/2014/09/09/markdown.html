@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="en">
+  
+  <head>
+    <meta charset="utf-8">
+    <meta name="baidu-site-verification" content="fk7KxxZA62" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>
+      markdown语法
+    </title>
+    <!--
+    <link rel="shortcut icon" type="image/x-icon" href="/static/images/favicon.ico" media="screen" />
+     -->
+    <!-- Bootstrap Core CSS -->
+    <link href="/static/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/static/bootstrap/css/bootstrap-theme.min.css" rel="stylesheet">
+    <link href="/static/css/blog.css" rel="stylesheet">
+    <link href="/static/css/pygments.css" rel="stylesheet">
+    <script src="/static/js/jquery-1.11.0.js"></script>
+    <script src="/static/bootstrap/js/bootstrap.min.js"></script>
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media
+    queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file://
+    -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js">
+      </script>
+      <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js">
+      </script>
+    <![endif]-->
+    <script>
+        var _hmt = _hmt || [];
+        (function() {
+          var hm = document.createElement("script");
+          hm.src = "//hm.baidu.com/hm.js?4a7b2b2a1ee8b8686ec632c195bbd833";
+          var s = document.getElementsByTagName("script")[0]; 
+          s.parentNode.insertBefore(hm, s);
+        })();
+    </script>
+  </head>
+  
+  <body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-inverse navbar-fixed-top " role="navigation">
+      <div class="container">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+          <a class="navbar-brand " href="/" >妙音</a>
+        </div>
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse">
+            <ul class="nav navbar-nav">
+                <li><a href="/categories.html">分 类</a></li>
+                <li><a href="/fofa.html">学佛</a></li>
+                <li><a href="/tools.html">工具</a></li>
+            </ul>
+            <form class="navbar-form navbar-right" role="search" action="https://www.google.com/search" method="get">
+              <div class="input-group">
+                <input type="text" name="q" class="form-control search-query" placeholder="搜索">
+                <input type="hidden" name="ie" value="UTF-8" />
+                <input type="hidden" name="sitesearch" value="www.zhulinjingshe.cn" />
+              </div>
+            </form>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Page Content -->
+    <div class="container">
+      <div class="content">
+          <div class="row">
+            <!-- Blog Post -->
+<!-- Title -->
+<h2>
+  markdown语法
+  <div class="post-date">
+        妙音 posted @
+        <span class="glyphicon glyphicon-time"></span>
+        2014-09-09 09:03
+        in markdown with tags 
+  </div>
+</h2>
+<!-- Author -->
+<hr>
+
+<div class="col-md-10">
+    <h1><strong>标题</strong></h1>
+
+<p>Markdown提供了两种方式（Setext和Atx）来显示标题。</p>
+
+<h4>语法</h4>
+
+<div class="highlight"><pre><code class="language-text" data-lang="text">Setext方式
+标题1
+=================
+
+标题2
+-----------------
+
+Atx方式
+# 标题1
+## 标题2
+###### 标题6</code></pre></div>
+
+<h4>效果</h4>
+
+<p>Setext方式</p>
+
+<h1>标题1</h1>
+
+<h2>标题2</h2>
+
+<p>Atx方式</p>
+
+<h1>标题1</h1>
+
+<h2>标题2</h2>
+
+<h6>标题6</h6>
+
+<hr>
+
+<h1><strong>换行</strong></h1>
+
+<p>在文字的末尾使用两个或两个以上的空格来表示换行。</p>
+
+<hr>
+
+<h1><strong>引用</strong></h1>
+
+<p>行首使用&gt;加上一个空格表示引用段落，内部可以嵌套多个引用。</p>
+
+<h4>语法</h4>
+
+<div class="highlight"><pre><code class="language-text" data-lang="text">&gt; 这是一个引用，
+&gt; 这里木有换行，   
+&gt; 在这里换行了。
+&gt; &gt; 内部嵌套</code></pre></div>
+
+<h4>效果</h4>
+
+<blockquote>
+<p>这是一个引用，
+这里木有换行，<br>
+在这里换行了。</p>
+
+<blockquote>
+<p>内部嵌套</p>
+</blockquote>
+</blockquote>
+
+<hr>
+
+<h1><strong>无列表</strong></h1>
+
+<p>无序列表使用*、+或-后面加上空格来表示。</p>
+
+<h4>语法</h4>
+
+<div class="highlight"><pre><code class="language-text" data-lang="text">* Item 1
+* Item 2
+* Item 3
+
++ Item 1
++ Item 2
++ Item 3
+
+- Item 1
+- Item 2
+- Item 3</code></pre></div>
+
+<h4>效果</h4>
+
+<ul>
+<li>Item 1</li>
+<li>Item 2</li>
+<li><p>Item 3</p></li>
+<li><p>Item 1</p></li>
+<li><p>Item 2</p></li>
+<li><p>Item 3</p></li>
+<li><p>Item 1</p></li>
+<li><p>Item 2</p></li>
+<li><p>Item 3</p></li>
+</ul>
+
+<hr>
+
+<h1><strong>有序列表</strong></h1>
+
+<p>使用数字加英文句号加空格表示。</p>
+
+<h4>语法</h4>
+
+<div class="highlight"><pre><code class="language-text" data-lang="text">1. Item 1
+2. Item 2
+3. Item 3</code></pre></div>
+
+<h4>效果</h4>
+
+<ol>
+<li>Item 1</li>
+<li>Item 2</li>
+<li>Item 3</li>
+</ol>
+
+<hr>
+
+<h1><strong>代码区域</strong></h1>
+
+<p>行内代码使用反斜杠`表示。
+代码段落则是在每行文字前加4个空格或者1个缩进符表示。</p>
+
+<h4>语法</h4>
+
+<div class="highlight"><pre><code class="language-text" data-lang="text">Bash中可以使用echo来进行输出。
+
+    $ echo &#39;Something&#39;
+    $ echo -e &#39;\tSomething\n&#39;</code></pre></div>
+
+<h4>效果</h4>
+
+<p>Bash中可以使用echo来进行输出。</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text">$ echo &#39;Something&#39;
+$ echo -e &#39;\tSomething\n&#39;
+</code></pre></div>
+<hr>
+
+<h1><strong>强调</strong></h1>
+
+<p>Markdown使用*或_表示强调。</p>
+
+<h4>语法</h4>
+
+<div class="highlight"><pre><code class="language-text" data-lang="text">单星号 = *斜体*
+单下划线 = _斜体_
+双星号 = **加粗**
+双下划线 = __加粗__</code></pre></div>
+
+<h4>效果</h4>
+
+<p>单星号 = <em>斜体</em><br>
+单下划线 = <em>斜体</em><br>
+双星号 = <strong>加粗</strong><br>
+双下划线 = <strong>加粗</strong>  </p>
+
+<hr>
+
+<h1><strong>链接</strong></h1>
+
+<p>Markdown支持两种风格的链接：Inline和Reference。</p>
+
+<h4>语法</h4>
+
+<p>Inline：以中括号标记显示的链接文本，后面紧跟用小括号包围的链接。如果链接有title属性，则在链接中使用空格加&quot;title属性&quot;。
+Reference：一般应用于多个不同位置使用相同链接。通常分为两个部分，调用部分为<a href="http://equation85.github.com">链接文本</a>；定义部分可以出现在文本中的其他位置，格式为<a href="http://equation85.github.com">ref</a>: http://some/link/address (可选的标题)。
+注：ref中不区分大小写。</p>
+
+<div class="highlight"><pre><code class="language-text" data-lang="text">这是一个Inline[示例](http://equation85.github.com &quot;可选的title&quot;)。
+这是一个Reference[示例][ref]。
+
+
+
+#### 效果
+这是一个Inline[示例](http://equation85.github.com "可选的title")。
+这是一个Reference[示例][ref]。
+
+
+---
+
+# **图片**
+图片的使用方法基本上和链接类似，只是在中括号前加叹号。
+注：Markdown不能设置图片大小，如果必须设置则应使用HTML标记<img>。
+
+#### 语法
+
+<div class="highlight"><pre><code class="language-text" data-lang="text">Inline示例：![替代文本](/assets/images/jian.jpg &quot;可选的title&quot;)
+Reference示例：![替代文本][pic]
+[pic]: /assets/images/ship.jpg &quot;可选的title&quot;
+HTML示例：&lt;img src=&quot;/assets/images/jian.jpg&quot; alt=&quot;替代文本&quot; title=&quot;标题文本&quot; width=&quot;200&quot; /&gt;</code></pre></div>
+
+<hr>
+
+<h1><strong>其他</strong></h1>
+
+<p><strong>自动链接</strong>
+使用尖括号，可以为输入的URL或者邮箱自动创建链接。如test@domain.com。</p>
+
+<p><strong>分隔线</strong>
+在一行中使用三个或三个以上的*、-或_可以添加分隔线，其中可以有空白，但是不能有其他字符。</p>
+
+<p><strong>转义字符</strong>
+Markdown中的转义字符为\，可以转义的有：</p>
+
+<div class="highlight"><pre><code class="language-text" data-lang="text">\\ 反斜杠
+\` 反引号
+\* 星号
+\_ 下划线
+\{\} 大括号
+\[\] 中括号
+\(\) 小括号
+\# 井号
+\+ 加号
+\- 减号
+\. 英文句号
+\! 感叹号</code></pre></div>
+  
+
+<hr>
+
+<p><a href="http://equation85.github.io/blog/markdown-examples/">来源</a></p>
+
+<hr>
+
+    <br/>
+    <div style="margin-top:10px;margin-bottom:10px">
+      
+      <span class="next">
+        上篇：
+        <a href="/html/2014/09/04/html-001.html">
+          让网站在浏览器标签上显示小图标
+        </a>
+      </span>
+       
+      
+      <span class="prev">
+        下篇：
+        <a href="/%E5%85%B6%E5%AE%83/2014/09/11/shadowsocks-001.html">
+          shadowsocks简易代理
+        </a>
+      </span>
+      
+    </div>
+    <hr>
+    <!-- Blog Comments -->
+    <div class="media">
+        <!-- UY BEGIN -->
+        <div id="uyan_frame"></div>
+        <script type="text/javascript" src="http://v2.uyan.cc/code/uyan.js?uid=1965284"></script>
+        <!-- UY END -->
+    </div>
+</div>
+
+          </div>
+      </div>
+      <!-- Footer -->
+      <footer>
+        <div class="row">
+          <div class="col-lg-12">
+            <p align="center"></p>
+          </div>
+        </div>
+      </footer>
+    </div>
+    <script src="/static/js/blog.js"></script>
+  </body>
+</html>
+

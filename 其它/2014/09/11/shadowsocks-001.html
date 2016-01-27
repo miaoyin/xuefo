@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+  
+  <head>
+    <meta charset="utf-8">
+    <meta name="baidu-site-verification" content="fk7KxxZA62" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>
+      shadowsocks简易代理
+    </title>
+    <!--
+    <link rel="shortcut icon" type="image/x-icon" href="/static/images/favicon.ico" media="screen" />
+     -->
+    <!-- Bootstrap Core CSS -->
+    <link href="/static/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/static/bootstrap/css/bootstrap-theme.min.css" rel="stylesheet">
+    <link href="/static/css/blog.css" rel="stylesheet">
+    <link href="/static/css/pygments.css" rel="stylesheet">
+    <script src="/static/js/jquery-1.11.0.js"></script>
+    <script src="/static/bootstrap/js/bootstrap.min.js"></script>
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media
+    queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file://
+    -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js">
+      </script>
+      <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js">
+      </script>
+    <![endif]-->
+    <script>
+        var _hmt = _hmt || [];
+        (function() {
+          var hm = document.createElement("script");
+          hm.src = "//hm.baidu.com/hm.js?4a7b2b2a1ee8b8686ec632c195bbd833";
+          var s = document.getElementsByTagName("script")[0]; 
+          s.parentNode.insertBefore(hm, s);
+        })();
+    </script>
+  </head>
+  
+  <body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-inverse navbar-fixed-top " role="navigation">
+      <div class="container">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+          <a class="navbar-brand " href="/" >妙音</a>
+        </div>
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse">
+            <ul class="nav navbar-nav">
+                <li><a href="/categories.html">分 类</a></li>
+                <li><a href="/fofa.html">学佛</a></li>
+                <li><a href="/tools.html">工具</a></li>
+            </ul>
+            <form class="navbar-form navbar-right" role="search" action="https://www.google.com/search" method="get">
+              <div class="input-group">
+                <input type="text" name="q" class="form-control search-query" placeholder="搜索">
+                <input type="hidden" name="ie" value="UTF-8" />
+                <input type="hidden" name="sitesearch" value="www.zhulinjingshe.cn" />
+              </div>
+            </form>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Page Content -->
+    <div class="container">
+      <div class="content">
+          <div class="row">
+            <!-- Blog Post -->
+<!-- Title -->
+<h2>
+  shadowsocks简易代理
+  <div class="post-date">
+        妙音 posted @
+        <span class="glyphicon glyphicon-time"></span>
+        2014-09-11 11:14
+        in 其它 with tags 
+  </div>
+</h2>
+<!-- Author -->
+<hr>
+
+<div class="col-md-10">
+    <p>以下是运行在windows的shadowsocks简易代理</p>
+
+<ul>
+<li><p>第一步：下载<a href="http://pan.baidu.com/s/1jGkj3Ga">shadowsocks包</a></p></li>
+<li><p>第二步：解压</p></li>
+<li><p>打开config.json配置帐号信息<br>
+帐号可从以下地方获取<br>
+<a href="http://boafanx.tabboa.com/boafanx-ss/">http://boafanx.tabboa.com/boafanx-ss/</a><br>
+<a href="https://www.shadowsocks.net/get">https://www.shadowsocks.net/get</a><br>
+配置示例</p></li>
+</ul>
+
+<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="p">{</span>
+    <span class="s2">&quot;server&quot;</span><span class="o">:</span><span class="s2">&quot;208.110.83.242&quot;</span><span class="p">,</span>  <span class="c1">//服务器ip</span>
+    <span class="s2">&quot;server_port&quot;</span><span class="o">:</span><span class="mi">43202</span><span class="p">,</span>        <span class="c1">//服务端口</span>
+    <span class="s2">&quot;local_port&quot;</span><span class="o">:</span><span class="mi">1080</span><span class="p">,</span>          <span class="c1">//本地端口</span>
+    <span class="s2">&quot;password&quot;</span><span class="o">:</span><span class="s2">&quot;sonydafahaoMA&quot;</span><span class="p">,</span> <span class="c1">//用来加密的密码</span>
+    <span class="s2">&quot;timeout&quot;</span><span class="o">:</span><span class="mi">600</span><span class="p">,</span>              <span class="c1">//超时时间</span>
+    <span class="s2">&quot;method&quot;</span><span class="o">:</span><span class="s2">&quot;aes-256-cfb&quot;</span>      <span class="c1">//加密方法</span>
+<span class="p">}</span></code></pre></div>
+
+<ul>
+<li><p>运行boafanx-ss.exe<br>
+代理已经启动启动，接下来就可以使用代理了，下面以chrome浏览器为理</p></li>
+<li><p>chrome使用代理<br>
+首先chrome需要安装了switchysharp插件<br>
+然后设置代理 socks5 127.0.0.1 1080<br>
+再设置切换规则 <em>.google.com</em> 通配符 shadowsocks  </p></li>
+<li><p>privoxy.exe可以将socks代理转换成http代理<br>
+详细见 <a href="http://boafanx.tabboa.com/105.boafanx">http://boafanx.tabboa.com/105.boafanx  </a></p></li>
+</ul>
+
+<p>来源 <a href="http://boafanx.tabboa.com/105.boafanx">http://boafanx.tabboa.com/105.boafanx</a></p>
+
+    <br/>
+    <div style="margin-top:10px;margin-bottom:10px">
+      
+      <span class="next">
+        上篇：
+        <a href="/markdown/2014/09/09/markdown.html">
+          markdown语法
+        </a>
+      </span>
+       
+      
+      <span class="prev">
+        下篇：
+        <a href="/java/2014/12/13/jetty.html">
+          WARN:oejsh.ContextHandler:Aliased resource 错误
+        </a>
+      </span>
+      
+    </div>
+    <hr>
+    <!-- Blog Comments -->
+    <div class="media">
+        <!-- UY BEGIN -->
+        <div id="uyan_frame"></div>
+        <script type="text/javascript" src="http://v2.uyan.cc/code/uyan.js?uid=1965284"></script>
+        <!-- UY END -->
+    </div>
+</div>
+
+          </div>
+      </div>
+      <!-- Footer -->
+      <footer>
+        <div class="row">
+          <div class="col-lg-12">
+            <p align="center"></p>
+          </div>
+        </div>
+      </footer>
+    </div>
+    <script src="/static/js/blog.js"></script>
+  </body>
+</html>
+

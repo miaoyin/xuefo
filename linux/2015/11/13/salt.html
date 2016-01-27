@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+  
+  <head>
+    <meta charset="utf-8">
+    <meta name="baidu-site-verification" content="fk7KxxZA62" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>
+      salt学习笔记
+    </title>
+    <!--
+    <link rel="shortcut icon" type="image/x-icon" href="/static/images/favicon.ico" media="screen" />
+     -->
+    <!-- Bootstrap Core CSS -->
+    <link href="/static/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/static/bootstrap/css/bootstrap-theme.min.css" rel="stylesheet">
+    <link href="/static/css/blog.css" rel="stylesheet">
+    <link href="/static/css/pygments.css" rel="stylesheet">
+    <script src="/static/js/jquery-1.11.0.js"></script>
+    <script src="/static/bootstrap/js/bootstrap.min.js"></script>
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media
+    queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file://
+    -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js">
+      </script>
+      <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js">
+      </script>
+    <![endif]-->
+    <script>
+        var _hmt = _hmt || [];
+        (function() {
+          var hm = document.createElement("script");
+          hm.src = "//hm.baidu.com/hm.js?4a7b2b2a1ee8b8686ec632c195bbd833";
+          var s = document.getElementsByTagName("script")[0]; 
+          s.parentNode.insertBefore(hm, s);
+        })();
+    </script>
+  </head>
+  
+  <body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-inverse navbar-fixed-top " role="navigation">
+      <div class="container">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+          <a class="navbar-brand " href="/" >妙音</a>
+        </div>
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse">
+            <ul class="nav navbar-nav">
+                <li><a href="/categories.html">分 类</a></li>
+                <li><a href="/fofa.html">学佛</a></li>
+                <li><a href="/tools.html">工具</a></li>
+            </ul>
+            <form class="navbar-form navbar-right" role="search" action="https://www.google.com/search" method="get">
+              <div class="input-group">
+                <input type="text" name="q" class="form-control search-query" placeholder="搜索">
+                <input type="hidden" name="ie" value="UTF-8" />
+                <input type="hidden" name="sitesearch" value="www.zhulinjingshe.cn" />
+              </div>
+            </form>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Page Content -->
+    <div class="container">
+      <div class="content">
+          <div class="row">
+            <!-- Blog Post -->
+<!-- Title -->
+<h2>
+  salt学习笔记
+  <div class="post-date">
+        妙音 posted @
+        <span class="glyphicon glyphicon-time"></span>
+        2015-11-13 10:27
+        in linux with tags salt
+  </div>
+</h2>
+<!-- Author -->
+<hr>
+
+<div class="col-md-10">
+    <p>salt使用主从结构配置、管理、监控远程机器。配置简单，功能强大，是很好的运维管理工具。</p>
+
+<ul>
+<li>准备环境</li>
+</ul>
+
+<p>使用vmware，准备两台虚拟机192.168.8.10和192.168.8.20，192.168.8.10作为master，192.168.820作为minion.</p>
+
+<ul>
+<li>master</li>
+</ul>
+<div class="highlight"><pre><code class="language-text" data-lang="text">yum install salt-master   //master
+</code></pre></div>
+<ul>
+<li>配置master</li>
+</ul>
+
+<p>打开/etc/salt/master</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text">interface: 192.168.8.10
+</code></pre></div>
+<ul>
+<li>启动master</li>
+</ul>
+<div class="highlight"><pre><code class="language-text" data-lang="text">service salt-master start
+</code></pre></div>
+<ul>
+<li>minion</li>
+</ul>
+<div class="highlight"><pre><code class="language-text" data-lang="text">yum install salt-minion   //minion
+</code></pre></div>
+<ul>
+<li>配置minion</li>
+</ul>
+
+<p>打开/etc/salt/master</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text">master: 192.168.8.10
+</code></pre></div>
+<ul>
+<li>启动minion</li>
+</ul>
+<div class="highlight"><pre><code class="language-text" data-lang="text">service salt-minion start
+</code></pre></div>
+<ul>
+<li>查看minion列表</li>
+</ul>
+
+<p>在master上运行</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text">➜  ~  salt-key -L
+Accepted Keys:
+192.168.124.1
+Denied Keys:
+Unaccepted Keys:
+Rejected Keys:
+</code></pre></div>
+<ul>
+<li>设置master接受所有minion</li>
+</ul>
+<div class="highlight"><pre><code class="language-text" data-lang="text">salt-key -A
+</code></pre></div>
+<ul>
+<li>测试minion</li>
+</ul>
+<div class="highlight"><pre><code class="language-text" data-lang="text">salt &#39;*&#39; test.ping
+</code></pre></div>
+<ul>
+<li>运行命令</li>
+</ul>
+<div class="highlight"><pre><code class="language-text" data-lang="text">salt &#39;192.168.8.20&#39; cmd.run &#39;df -Th&#39;
+</code></pre></div>
+<ul>
+<li>管理master与minion关系</li>
+</ul>
+<div class="highlight"><pre><code class="language-text" data-lang="text">salt-key -L 查看key列表
+salt-key -D 删除所有key
+salt-key -d key 删除单个key
+salt-key -A 接受所有key
+salt-key -a key 接受单个key
+</code></pre></div>
+    <br/>
+    <div style="margin-top:10px;margin-bottom:10px">
+      
+      <span class="next">
+        上篇：
+        <a href="/linux/2015/11/10/ssh-ask.html">
+          去掉ssh初次登录询问yes/no
+        </a>
+      </span>
+       
+      
+      <span class="prev">
+        下篇：
+        <a href="/python/2015/11/13/paramiko.html">
+          python paramiko实现ssh远程登录
+        </a>
+      </span>
+      
+    </div>
+    <hr>
+    <!-- Blog Comments -->
+    <div class="media">
+        <!-- UY BEGIN -->
+        <div id="uyan_frame"></div>
+        <script type="text/javascript" src="http://v2.uyan.cc/code/uyan.js?uid=1965284"></script>
+        <!-- UY END -->
+    </div>
+</div>
+
+          </div>
+      </div>
+      <!-- Footer -->
+      <footer>
+        <div class="row">
+          <div class="col-lg-12">
+            <p align="center"></p>
+          </div>
+        </div>
+      </footer>
+    </div>
+    <script src="/static/js/blog.js"></script>
+  </body>
+</html>
+

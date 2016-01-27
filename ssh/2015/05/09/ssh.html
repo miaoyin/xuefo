@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+  
+  <head>
+    <meta charset="utf-8">
+    <meta name="baidu-site-verification" content="fk7KxxZA62" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>
+      ssh公钥匙登录失败原因
+    </title>
+    <!--
+    <link rel="shortcut icon" type="image/x-icon" href="/static/images/favicon.ico" media="screen" />
+     -->
+    <!-- Bootstrap Core CSS -->
+    <link href="/static/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/static/bootstrap/css/bootstrap-theme.min.css" rel="stylesheet">
+    <link href="/static/css/blog.css" rel="stylesheet">
+    <link href="/static/css/pygments.css" rel="stylesheet">
+    <script src="/static/js/jquery-1.11.0.js"></script>
+    <script src="/static/bootstrap/js/bootstrap.min.js"></script>
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media
+    queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file://
+    -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js">
+      </script>
+      <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js">
+      </script>
+    <![endif]-->
+    <script>
+        var _hmt = _hmt || [];
+        (function() {
+          var hm = document.createElement("script");
+          hm.src = "//hm.baidu.com/hm.js?4a7b2b2a1ee8b8686ec632c195bbd833";
+          var s = document.getElementsByTagName("script")[0]; 
+          s.parentNode.insertBefore(hm, s);
+        })();
+    </script>
+  </head>
+  
+  <body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-inverse navbar-fixed-top " role="navigation">
+      <div class="container">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+          <a class="navbar-brand " href="/" >妙音</a>
+        </div>
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse">
+            <ul class="nav navbar-nav">
+                <li><a href="/categories.html">分 类</a></li>
+                <li><a href="/fofa.html">学佛</a></li>
+                <li><a href="/tools.html">工具</a></li>
+            </ul>
+            <form class="navbar-form navbar-right" role="search" action="https://www.google.com/search" method="get">
+              <div class="input-group">
+                <input type="text" name="q" class="form-control search-query" placeholder="搜索">
+                <input type="hidden" name="ie" value="UTF-8" />
+                <input type="hidden" name="sitesearch" value="www.zhulinjingshe.cn" />
+              </div>
+            </form>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Page Content -->
+    <div class="container">
+      <div class="content">
+          <div class="row">
+            <!-- Blog Post -->
+<!-- Title -->
+<h2>
+  ssh公钥匙登录失败原因
+  <div class="post-date">
+        妙音 posted @
+        <span class="glyphicon glyphicon-time"></span>
+        2015-05-09 16:42
+        in ssh with tags 
+  </div>
+</h2>
+<!-- Author -->
+<hr>
+
+<div class="col-md-10">
+    <h1>配置参数未开启</h1>
+
+<p>打开远程主机/etc/ssh/sshd_config，去掉下面几行前面的&quot;#&quot;注释</p>
+
+<div class="highlight"><pre><code class="language-bash" data-lang="bash">RSAAuthentication yes
+PubkeyAuthentication yes
+AuthorizedKeysFile .ssh/authorized_keys</code></pre></div>
+
+<p>然后重启ssh服务</p>
+
+<div class="highlight"><pre><code class="language-bash" data-lang="bash">service ssh restart</code></pre></div>
+
+<h1>目录权限不正确</h1>
+
+<p>查看/var/log/secure文件，发现提示</p>
+
+<div class="highlight"><pre><code class="language-bash" data-lang="bash">May  <span class="m">9</span> 15:25:17 localhost sshd<span class="o">[</span>54931<span class="o">]</span>: Authentication refused: bad ownership or modes <span class="k">for</span> directory /root</code></pre></div>
+
+<p>查看此时ssh用户的目录权限</p>
+
+<div class="highlight"><pre><code class="language-bash" data-lang="bash">drwxrwxrwx   <span class="m">9</span> root root  <span class="m">4096</span> 5月   <span class="m">9</span> 15:38 root</code></pre></div>
+
+<p>使用&quot;chmod og-w /root&quot;修改为</p>
+
+<div class="highlight"><pre><code class="language-bash" data-lang="bash">drw-xr-r. <span class="m">1</span> root root <span class="m">942</span> 5月   <span class="m">7</span> 16:57 anaconda-ks.cfg</code></pre></div>
+
+<p>这里权限只是一个示例，大部分机器上的root目录权限不是这样的，需要根据具体情况设置.</p>
+
+<h1>密钥未添加到ssh-agent</h1>
+
+<p>ssh调试信息中出现</p>
+
+<div class="highlight"><pre><code class="language-bash" data-lang="bash">➜  ~  ssh -v root@192.168.8.11
+...
+Agent admitted failure to sign using the key
+...</code></pre></div>
+
+<p>解决办法</p>
+
+<div class="highlight"><pre><code class="language-bash" data-lang="bash">➜  ~  ssh-add
+Identity added: /home/wyq/.ssh/id_rsa <span class="o">(</span>/home/wyq/.ssh/id_rsa<span class="o">)</span></code></pre></div>
+
+<p>ssh-agent用于管理公钥身份验证所使用的私钥，ssh-add用于将密钥加入到ssh-agent中</p>
+
+    <br/>
+    <div style="margin-top:10px;margin-bottom:10px">
+      
+      <span class="next">
+        上篇：
+        <a href="/shell/2015/05/08/shell.html">
+          shell中怎么注释多行
+        </a>
+      </span>
+       
+      
+      <span class="prev">
+        下篇：
+        <a href="/django/2015/05/12/django-static.html">
+          如何配置django静态文件路径
+        </a>
+      </span>
+      
+    </div>
+    <hr>
+    <!-- Blog Comments -->
+    <div class="media">
+        <!-- UY BEGIN -->
+        <div id="uyan_frame"></div>
+        <script type="text/javascript" src="http://v2.uyan.cc/code/uyan.js?uid=1965284"></script>
+        <!-- UY END -->
+    </div>
+</div>
+
+          </div>
+      </div>
+      <!-- Footer -->
+      <footer>
+        <div class="row">
+          <div class="col-lg-12">
+            <p align="center"></p>
+          </div>
+        </div>
+      </footer>
+    </div>
+    <script src="/static/js/blog.js"></script>
+  </body>
+</html>
+

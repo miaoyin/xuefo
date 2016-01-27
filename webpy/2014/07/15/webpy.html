@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+  
+  <head>
+    <meta charset="utf-8">
+    <meta name="baidu-site-verification" content="fk7KxxZA62" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>
+      webpy在insert时psycopg2.OperationalError: ...currval 仍没被定义
+    </title>
+    <!--
+    <link rel="shortcut icon" type="image/x-icon" href="/static/images/favicon.ico" media="screen" />
+     -->
+    <!-- Bootstrap Core CSS -->
+    <link href="/static/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/static/bootstrap/css/bootstrap-theme.min.css" rel="stylesheet">
+    <link href="/static/css/blog.css" rel="stylesheet">
+    <link href="/static/css/pygments.css" rel="stylesheet">
+    <script src="/static/js/jquery-1.11.0.js"></script>
+    <script src="/static/bootstrap/js/bootstrap.min.js"></script>
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media
+    queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file://
+    -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js">
+      </script>
+      <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js">
+      </script>
+    <![endif]-->
+    <script>
+        var _hmt = _hmt || [];
+        (function() {
+          var hm = document.createElement("script");
+          hm.src = "//hm.baidu.com/hm.js?4a7b2b2a1ee8b8686ec632c195bbd833";
+          var s = document.getElementsByTagName("script")[0]; 
+          s.parentNode.insertBefore(hm, s);
+        })();
+    </script>
+  </head>
+  
+  <body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-inverse navbar-fixed-top " role="navigation">
+      <div class="container">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+          <a class="navbar-brand " href="/" >妙音</a>
+        </div>
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse">
+            <ul class="nav navbar-nav">
+                <li><a href="/categories.html">分 类</a></li>
+                <li><a href="/fofa.html">学佛</a></li>
+                <li><a href="/tools.html">工具</a></li>
+            </ul>
+            <form class="navbar-form navbar-right" role="search" action="https://www.google.com/search" method="get">
+              <div class="input-group">
+                <input type="text" name="q" class="form-control search-query" placeholder="搜索">
+                <input type="hidden" name="ie" value="UTF-8" />
+                <input type="hidden" name="sitesearch" value="www.zhulinjingshe.cn" />
+              </div>
+            </form>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Page Content -->
+    <div class="container">
+      <div class="content">
+          <div class="row">
+            <!-- Blog Post -->
+<!-- Title -->
+<h2>
+  webpy在insert时psycopg2.OperationalError: ...currval 仍没被定义
+  <div class="post-date">
+        妙音 posted @
+        <span class="glyphicon glyphicon-time"></span>
+        2014-07-15 10:45
+        in webpy with tags 
+  </div>
+</h2>
+<!-- Author -->
+<hr>
+
+<div class="col-md-10">
+    <p>在用webpy的db.insert()向postgres插入数据时出现</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash">Traceback <span class="o">(</span>most recent call last<span class="o">)</span>:
+  File <span class="s2">&quot;upgrade2.0.py&quot;</span>, line 170, in &lt;module&gt;
+    copy_webservice<span class="o">()</span>
+  File <span class="s2">&quot;upgrade2.0.py&quot;</span>, line 165, in copy_webservice
+    db36.insert<span class="o">(</span><span class="s1">&#39;top_node_location&#39;</span>, **r<span class="o">)</span>
+  File <span class="s2">&quot;/usr/lib/python2.7/site-packages/web/db.py&quot;</span>, line 777, in insert
+    self._db_execute<span class="o">(</span>db_cursor, sql_query<span class="o">)</span>
+  File <span class="s2">&quot;/usr/lib/python2.7/site-packages/web/db.py&quot;</span>, line 587, in _db_execute
+    <span class="nv">out</span> <span class="o">=</span> cur.execute<span class="o">(</span>query, params<span class="o">)</span>
+  File <span class="s2">&quot;/usr/lib/python2.7/site-packages/DBUtils/SteadyDB.py&quot;</span>, line 631, in tough_method
+    raise error <span class="c"># reraise the original error again</span>
+psycopg2.OperationalError: 错误:  在此会话中序列 <span class="s2">&quot;top_node_location_id_seq&quot;</span> 的 currval 仍没被定义
+</code></pre></div>
+<p>找到/lib/python2.7/site-packages/web/db.py</p>
+<div class="highlight"><pre><code class="language-python" data-lang="python"><span class="k">def</span> <span class="nf">_process_insert_query</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">query</span><span class="p">,</span> <span class="n">tablename</span><span class="p">,</span> <span class="n">seqname</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">seqname</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+        <span class="c"># when seqname is not provided guess the seqname and make sure it exists</span>
+        <span class="n">seqname</span> <span class="o">=</span> <span class="n">tablename</span> <span class="o">+</span> <span class="s">&quot;_id_seq&quot;</span>
+        <span class="k">if</span> <span class="n">seqname</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_all_sequences</span><span class="p">():</span>
+            <span class="n">seqname</span> <span class="o">=</span> <span class="bp">None</span>
+
+    <span class="k">if</span> <span class="n">seqname</span><span class="p">:</span>
+        <span class="c"># 注释掉此句</span>
+        <span class="c">#query += &quot;; SELECT currval(&#39;%s&#39;)&quot; % seqname</span>
+        <span class="k">pass</span>
+
+    <span class="k">return</span> <span class="n">query</span>
+</code></pre></div>
+<p>原因是webpy在insert时，有一个额外的select使用currval获取当前序列值，但是在postgres9.3中已经不支持currval()了.<br>
+看来webpy作者去世，后面没有更新维护了</p>
+
+    <br/>
+    <div style="margin-top:10px;margin-bottom:10px">
+      
+      <span class="next">
+        上篇：
+        <a href="/python/2014/07/14/pexpect.html">
+          python终端模拟工具pexpect
+        </a>
+      </span>
+       
+      
+      <span class="prev">
+        下篇：
+        <a href="/angularjs/2014/07/30/angularjs.html">
+          理解指令的restrict属性
+        </a>
+      </span>
+      
+    </div>
+    <hr>
+    <!-- Blog Comments -->
+    <div class="media">
+        <!-- UY BEGIN -->
+        <div id="uyan_frame"></div>
+        <script type="text/javascript" src="http://v2.uyan.cc/code/uyan.js?uid=1965284"></script>
+        <!-- UY END -->
+    </div>
+</div>
+
+          </div>
+      </div>
+      <!-- Footer -->
+      <footer>
+        <div class="row">
+          <div class="col-lg-12">
+            <p align="center"></p>
+          </div>
+        </div>
+      </footer>
+    </div>
+    <script src="/static/js/blog.js"></script>
+  </body>
+</html>
+
