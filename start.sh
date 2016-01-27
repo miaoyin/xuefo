@@ -1,2 +1,2 @@
 #! /bin/bash
-jekyll serve -P 5000 -H 0.0.0.0 -w 
+jekyll serve -P 8080  -w  -H 0.0.0.0
